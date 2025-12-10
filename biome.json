@@ -1,0 +1,78 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.2.6/schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    "ignoreUnknown": true,
+    "includes": [
+      "**",
+      "!node_modules",
+      "!.next",
+      "!dist",
+      "!build",
+      "!migrations",
+      "!**/*.css",
+      "!**/*.scss"
+    ]
+  },
+  "json": {
+    "parser": {
+      "allowComments": true
+    }
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "suspicious": {
+        "noUnknownAtRules": "off"
+      }
+    },
+    "domains": {
+      "next": "recommended",
+      "react": "recommended"
+    }
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "lineWidth": 80,
+    "indentWidth": 2,
+    "bracketSpacing": true
+  },
+  "javascript": {
+    "globals": [
+      "$",
+      "_",
+      "externalVariable"
+    ],
+    "jsxRuntime": "transparent",
+    "linter": {
+      "enabled": false
+    },
+    "formatter": {
+      "enabled": true,
+      "quoteStyle": "single",
+      "quoteProperties": "asNeeded",
+      "jsxQuoteStyle": "single",
+      "indentStyle": "space",
+      "lineWidth": 80,
+      "indentWidth": 2,
+      "bracketSameLine": true,
+      "attributePosition": "multiline",
+      "expand": "always",
+      "operatorLinebreak": "before"
+    }
+  },
+  "assist": {
+    "enabled": true,
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  }
+}

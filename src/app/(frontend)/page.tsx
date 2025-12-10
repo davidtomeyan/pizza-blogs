@@ -1,59 +1,34 @@
-import { headers as getHeaders } from 'next/headers.js'
-import Image from 'next/image'
-import { getPayload } from 'payload'
-import React from 'react'
-import { fileURLToPath } from 'url'
+import React from 'react';
+import { HomePage } from '@/globals/Home-page/component';
+import { SWRConfig, unstable_serialize } from 'swr';
+import { CollectionSlug } from 'payload';
+import { getCachedCollection } from '@/lib/utils/get-collection';
 
-import config from '@/payload.config'
-import './styles.css'
+const fallback: [
+  CollectionSlug,
+  page: number,
+  limit: number,
+] = [
+  'restaurants',
+  1,
+  6,
+];
 
-export default async function HomePage() {
-  const headers = await getHeaders()
-  const payloadConfig = await config
-  const payload = await getPayload({ config: payloadConfig })
-  const { user } = await payload.auth({ headers })
-
-  const fileURL = `vscode://file/${fileURLToPath(import.meta.url)}`
+export default async function Page() {
+  const data = await getCachedCollection({
+    collection: 'restaurants',
+    page: 1,
+    limit: 6,
+  })();
 
   return (
-    <div className="home">
-      <div className="content">
-        <picture>
-          <source srcSet="https://raw.githubusercontent.com/payloadcms/payload/main/packages/ui/src/assets/payload-favicon.svg" />
-          <Image
-            alt="Payload Logo"
-            height={65}
-            src="https://raw.githubusercontent.com/payloadcms/payload/main/packages/ui/src/assets/payload-favicon.svg"
-            width={65}
-          />
-        </picture>
-        {!user && <h1>Welcome to your new project.</h1>}
-        {user && <h1>Welcome back, {user.email}</h1>}
-        <div className="links">
-          <a
-            className="admin"
-            href={payloadConfig.routes.admin}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Go to admin panel
-          </a>
-          <a
-            className="docs"
-            href="https://payloadcms.com/docs"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Documentation
-          </a>
-        </div>
-      </div>
-      <div className="footer">
-        <p>Update this page by editing</p>
-        <a className="codeLink" href={fileURL}>
-          <code>app/(frontend)/page.tsx</code>
-        </a>
-      </div>
-    </div>
-  )
+    <SWRConfig
+      value={{
+        fallback: {
+          [unstable_serialize(fallback)]: data,
+        },
+      }}>
+      <HomePage />
+    </SWRConfig>
+  );
 }
