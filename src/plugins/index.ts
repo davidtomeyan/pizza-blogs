@@ -19,5 +19,4 @@ export const plugins: Plugin[] = [
     tabbedUI: true,
     uploadsCollection: 'media',
   }),
-  // storage-adapter-placeholder
 ];
