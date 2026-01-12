@@ -47,6 +47,7 @@ public/media/*
 !public/media/
 !public/media/.gitkeep
 
+
 # Playwright
 node_modules/
 /test-results/
