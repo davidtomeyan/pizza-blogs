@@ -1,6 +1,7 @@
 import type { Plugin } from 'payload';
 import { seoPlugin } from '@payloadcms/plugin-seo';
-
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob';
+const isVercel = !!process.env.VERCEL;
 export const plugins: Plugin[] = [
   seoPlugin({
     collections: [
@@ -19,4 +20,17 @@ export const plugins: Plugin[] = [
     tabbedUI: true,
     uploadsCollection: 'media',
   }),
+  ...(isVercel
+    ? [
+        vercelBlobStorage({
+          enabled: true,
+          collections: {
+            media: {
+              prefix: 'media',
+            },
+          },
+          token: process.env.BLOB_READ_WRITE_TOKEN,
+        }),
+      ]
+    : []),
 ];
