@@ -2618,11 +2618,11 @@ export interface Home {
     description?: string | null;
     enable?: boolean | null;
   };
-  ctaSection: {
+  ctaSection?: {
     label?: string | null;
     title?: string | null;
     description?: string | null;
-    ctaLink: CMSLink;
+    ctaLink?: CMSLink;
     image?: (number | null) | Media;
     enable?: boolean | null;
   };

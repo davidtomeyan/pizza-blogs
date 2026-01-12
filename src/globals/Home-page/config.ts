@@ -93,6 +93,7 @@ export const HomePage: GlobalConfig<'home'> = {
             },
             cmsLink({
               name: 'ctaLink',
+              admin,
             }),
             {
               admin,
