@@ -25,13 +25,13 @@ function CtaSection({ ctaSection }: { ctaSection?: Home['ctaSection'] }) {
             {ctaSection?.description && (
               <p className='text-muted'>{ctaSection?.description}</p>
             )}
-            <CMSLink
-              {...ctaSection.ctaLink}
-              variant='secondary'
-              size='sm'>
+            {ctaSection.ctaLink && <CMSLink
+                {...ctaSection.ctaLink}
+                variant='secondary'
+                size='sm'>
               {ctaSection.ctaLink?.label}
-              <ArrowRight />
-            </CMSLink>
+              <ArrowRight/>
+            </CMSLink>}
           </div>
         </div>
         <div className='max-md:ps-10 md:pt-16'>
