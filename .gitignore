@@ -43,6 +43,8 @@ next-env.d.ts
 /media
 public/*
 !public/.gitkeep
+!public/media/
+!public/media/.gitkeep
 
 # Playwright
 node_modules/
