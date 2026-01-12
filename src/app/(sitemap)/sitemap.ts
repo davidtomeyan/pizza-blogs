@@ -1,20 +1,52 @@
-import { envPublic } from '@/lib/env'
-
-import type { MetadataRoute } from 'next'
-import {getCachedCollection} from "@/lib/utils/get-collection";
+import type { MetadataRoute } from 'next';
+import { getServerSideURL } from '@/lib/utils/get-url';
+import { getCachedGlobal } from '@/lib/utils/get-global';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const home = await getCachedGlobal({
+    slug: 'home',
+  })();
+  const aboutUs = await getCachedGlobal({
+    slug: 'about-us',
+  })();
+  const privacyPolicy = await getCachedGlobal({
+    slug: 'privacy-policy',
+  })();
+  const termsOfService = await getCachedGlobal({
+    slug: 'terms-of-service',
+  })();
+  const cookiesSettings = await getCachedGlobal({
+    slug: 'cookies-settings',
+  })();
 
-  const postsRes = await getCachedCollection({collection:"blogs"})()
+  const url = getServerSideURL();
+  const urls: MetadataRoute.Sitemap = [
+    {
+      priority: 1,
+      url: url,
+      lastModified: home.updatedAt ?? new Date(),
+    },
+    {
+      priority: 0.9,
+      url: `${url}/about-us`,
+      lastModified: aboutUs.updatedAt ?? new Date(),
+    },
+    {
+      priority: 0.5,
+      url: `${url}/privacy-policy`,
+      lastModified: privacyPolicy.updatedAt ?? new Date(),
+    },
+    {
+      priority: 0.5,
+      url: `${url}/terms-of-service`,
+      lastModified: termsOfService.updatedAt ?? new Date(),
+    },
+    {
+      priority: 0.5,
+      url: `${url}/cookies-settings`,
+      lastModified: cookiesSettings.updatedAt ?? new Date(),
+    },
+  ];
 
-  const urls: MetadataRoute.Sitemap = []
-
-  Array.from({ length: postsRes?.totalPages ?? 1 }).map((_, index) => {
-    urls.push({
-      priority: 0.8,
-      url: `${envPublic.cmsUrl}/posts/${index + 1}`,
-      lastModified: new Date().toISOString(),
-    })
-  })
-  return urls
+  return urls;
 }

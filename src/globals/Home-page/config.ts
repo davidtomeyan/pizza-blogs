@@ -3,12 +3,8 @@ import {
   authenticated,
   authenticatedOrPublished,
 } from '@/lib/utils/access/auth';
-import { revalidateGlobalHook } from '@/lib/utils/revalidate-global';
-import {
-  dynamicIcons,
-  linkTypeRadio,
-  linkTypes, newTab,
-} from '@/fields/cms-link';
+import { revalidateGlobal } from '@/lib/utils/revalidate-global';
+import { cmsLink } from '@/fields/cms-link';
 
 const admin = {
   condition: (_: any, siblingData: any) => siblingData.enable,
@@ -25,7 +21,7 @@ export const HomePage: GlobalConfig<'home'> = {
   },
   hooks: {
     afterChange: [
-      revalidateGlobalHook,
+      (ctx) => revalidateGlobal(ctx.global.slug),
     ],
   },
   fields: [
@@ -33,8 +29,8 @@ export const HomePage: GlobalConfig<'home'> = {
       type: 'tabs',
       tabs: [
         {
-          label: 'Blogs Carousel',
-          name: 'blogsCarousel',
+          label: 'Restaurants Carousel',
+          name: 'restaurantsCarousel',
           fields: [
             {
               type: 'text',
@@ -43,26 +39,21 @@ export const HomePage: GlobalConfig<'home'> = {
             },
             {
               admin,
-              type: 'row',
-              fields: [
-                {
-                  type: 'relationship',
-                  relationTo: 'blogs',
-                  name: 'blogs',
-                  hasMany: true,
-                },
-              ],
+              type: 'relationship',
+              relationTo: 'restaurants',
+              name: 'restaurants',
+              hasMany: true,
             },
             {
               type: 'checkbox',
               name: 'enable',
-              defaultValue: true,
+              defaultValue: false,
             },
           ],
         },
         {
-          label: 'Restaurants',
-          name: 'restaurants',
+          label: 'Blogs',
+          name: 'blogs',
           fields: [
             {
               admin,
@@ -77,7 +68,7 @@ export const HomePage: GlobalConfig<'home'> = {
             {
               type: 'checkbox',
               name: 'enable',
-              defaultValue: true,
+              defaultValue: false,
             },
           ],
         },
@@ -100,46 +91,9 @@ export const HomePage: GlobalConfig<'home'> = {
               name: 'description',
               admin,
             },
-            {
-              required: true,
-              name: 'link',
-              type: 'group',
-              label: 'CTA Link',
-              interfaceName: 'ICTALink',
-              admin: {
-                ...admin,
-                hideGutter: true,
-              },
-              fields: [
-                {
-                  type: 'row',
-                  fields: [
-                    linkTypeRadio({
-                      defaultValue: 'custom',
-                    }),
-                    newTab({
-                      defaultValue: true,
-                    }),
-                  ],
-                },
-                {
-                  type: 'row',
-                  fields: [
-                    ...linkTypes,
-                    {
-                      required: true,
-                      defaultValue: 'Get started',
-                      name: 'label',
-                      type: 'text',
-                      admin: {
-                        width: '50%',
-                      },
-                      label: 'Label',
-                    },
-                  ],
-                },
-              ],
-            },
+            cmsLink({
+              name: 'ctaLink',
+            }),
             {
               admin,
               type: 'upload',
@@ -154,7 +108,7 @@ export const HomePage: GlobalConfig<'home'> = {
             {
               type: 'checkbox',
               name: 'enable',
-              defaultValue: true,
+              defaultValue: false,
             },
           ],
         },
@@ -178,8 +132,8 @@ export const HomePage: GlobalConfig<'home'> = {
               fields: [
                 {
                   type: 'relationship',
-                  relationTo: 'blogs',
-                  name: 'blogs',
+                  relationTo: 'restaurants',
+                  name: 'list',
                   hasMany: true,
                 },
               ],
@@ -187,7 +141,7 @@ export const HomePage: GlobalConfig<'home'> = {
             {
               type: 'checkbox',
               name: 'enable',
-              defaultValue: true,
+              defaultValue: false,
             },
           ],
         },
@@ -213,32 +167,22 @@ export const HomePage: GlobalConfig<'home'> = {
             {
               type: 'checkbox',
               name: 'enable',
-              defaultValue: true,
+              defaultValue: false,
             },
             {
-              type: 'array',
-              name: 'links',
+              type: 'group',
+              name: 'contacts',
+              label: 'contacts',
+              admin,
               fields: [
                 {
-                  name: 'link',
+                  name: 'phone',
+                  label: 'Phone Number',
                   type: 'group',
-                  interfaceName: 'ContactLinks',
-                  admin: {
-                    hideGutter: true,
-                  },
                   fields: [
                     {
                       type: 'row',
                       fields: [
-                        {
-                          name: 'url',
-                          type: 'text',
-                          admin: {
-                            width: '50%',
-                          },
-                          label: 'URL',
-                          required: true,
-                        },
                         {
                           name: 'ctaText',
                           type: 'text',
@@ -246,18 +190,94 @@ export const HomePage: GlobalConfig<'home'> = {
                             width: '50%',
                           },
                           label: 'CTA Text',
-                          required: true,
+                          defaultValue: 'Call us',
                         },
                         {
-                          name: 'label',
+                          name: 'number',
                           type: 'text',
                           admin: {
                             width: '50%',
                           },
-                          label: 'Label',
-                          required: true,
+                          defaultValue: '+1 400 500 600',
                         },
-                        dynamicIcons(),
+                        {
+                          name: 'placeholder',
+                          type: 'text',
+                          admin: {
+                            width: '50%',
+                          },
+                        },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  name: 'emailAddress',
+                  type: 'group',
+                  fields: [
+                    {
+                      type: 'row',
+                      fields: [
+                        {
+                          name: 'ctaText',
+                          type: 'text',
+                          admin: {
+                            width: '50%',
+                          },
+                          label: 'CTA Text',
+                          defaultValue: 'Write an email',
+                        },
+                        {
+                          name: 'email',
+                          type: 'text',
+                          admin: {
+                            width: '50%',
+                          },
+                          defaultValue: 'hello@example.com',
+                        },
+                        {
+                          name: 'placeholder',
+                          type: 'text',
+                          admin: {
+                            width: '50%',
+                          },
+                        },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  name: 'location',
+                  type: 'group',
+                  fields: [
+                    {
+                      type: 'row',
+                      fields: [
+                        {
+                          name: 'ctaText',
+                          type: 'text',
+                          admin: {
+                            width: '50%',
+                          },
+                          label: 'CTA Text',
+                          defaultValue: 'Visit our office',
+                        },
+                        {
+                          name: 'url',
+                          type: 'text',
+                          admin: {
+                            width: '50%',
+                          },
+                          defaultValue: '/',
+                        },
+                        {
+                          name: 'placeholder',
+                          type: 'text',
+                          admin: {
+                            width: '50%',
+                          },
+                          defaultValue: '192 Griffin Street, Gilbert, AZ 32521',
+                        },
                       ],
                     },
                   ],

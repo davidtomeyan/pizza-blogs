@@ -5,9 +5,13 @@ import {
   authenticatedOrPublished,
 } from '@/lib/utils/access/auth';
 import { richTextWithBlocksField } from '@/fields/rich-text-with-blocks';
-import {revalidateCollection, revalidateCollectionById} from '@/lib/utils/revalidate-collection';
+import {
+  revalidateCollection,
+  revalidateCollectionById,
+} from '@/lib/utils/revalidate-collection';
+import { revalidateGlobal } from '@/lib/utils/revalidate-global';
 
-export const Restaurants: CollectionConfig = {
+export const Restaurants: CollectionConfig<'restaurants'> = {
   slug: 'restaurants',
   access: {
     create: authenticated,
@@ -16,27 +20,35 @@ export const Restaurants: CollectionConfig = {
     update: authenticated,
   },
   defaultPopulate: {
-    shortTitle: true,
-    shortDescription: true,
+    name: true,
+    image: true,
+    description: true,
+    details: true,
+    location: true,
+    meta: true,
+    createdAt: true,
+    updatedAt: true,
   },
   hooks: {
     afterChange: [
       ({ doc, collection }) => {
         revalidateCollection(collection.slug);
+        revalidateGlobal('home');
         revalidateCollectionById(collection.slug, doc.id);
       },
     ],
     afterDelete: [
       ({ doc, collection }) => {
         revalidateCollection(collection.slug);
+        revalidateGlobal('home');
         revalidateCollectionById(collection.slug, doc.id);
       },
     ],
   },
   admin: {
-    useAsTitle: 'shortTitle',
+    useAsTitle: 'name',
     defaultColumns: [
-      'shortTitle',
+      'name',
       'updatedAt',
     ],
     group: 'Data',
@@ -54,23 +66,63 @@ export const Restaurants: CollectionConfig = {
     },
     {
       type: 'text',
-      name: 'shortTitle',
-      label: 'Title',
-      maxLength: 80,
+      name: 'name',
+      label: 'Name',
       required: true,
-      admin: {
-        description: 'Maximum length: 80 characters',
-      },
     },
     {
       type: 'textarea',
-      name: 'shortDescription',
+      name: 'description',
       label: 'Description',
-      maxLength: 200,
-      required: true,
-      admin: {
-        description: 'Maximum length: 200 characters',
-      },
+      required: false,
+    },
+    {
+      type: 'text',
+      label: 'Location url',
+      name: 'location',
+      required: false,
+    },
+    {
+      type: 'text',
+      label: 'Phone number',
+      name: 'phone',
+      required: false,
+    },
+    {
+      type: 'array',
+      name: 'details',
+      maxRows: 4,
+      fields: [
+        {
+          type: 'row',
+          fields: [
+            {
+              type: 'text',
+              name: 'title',
+              required: true,
+              admin: {
+                width: '50%',
+              },
+            },
+            {
+              type: 'text',
+              name: 'value',
+              label: 'Value (optional)',
+              admin: {
+                width: '50%',
+              },
+            },
+          ],
+        },
+        {
+          type: 'textarea',
+          name: 'desc',
+          label: 'Description',
+          admin: {
+            description: 'Optional — short text shown under title/value pair',
+          },
+        },
+      ],
     },
     richTextWithBlocksField,
   ],

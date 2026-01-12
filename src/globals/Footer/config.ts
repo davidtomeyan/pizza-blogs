@@ -1,11 +1,10 @@
 import { GlobalConfig } from 'payload';
-import { cmsLinks } from '@/fields/cms-link';
 import {
   authenticated,
   authenticatedOrPublished,
 } from '@/lib/utils/access/auth';
-import { richTextWithBlocksField } from '@/fields/rich-text-with-blocks';
-import { revalidateGlobalHook } from '@/lib/utils/revalidate-global';
+import { revalidateGlobal } from '@/lib/utils/revalidate-global';
+import { socialIconNames } from '@/components/social-icons';
 
 export const Footer: GlobalConfig = {
   slug: 'footer',
@@ -15,42 +14,30 @@ export const Footer: GlobalConfig = {
   },
   hooks: {
     afterChange: [
-      revalidateGlobalHook,
+      (ctx) => revalidateGlobal(ctx.global.slug),
     ],
   },
   fields: [
     {
-      type: 'blocks',
-      name: 'footerBlocks',
-      maxRows: 5,
-      blocks: [
+      type: 'text',
+      name: 'copyrightText',
+      defaultValue: 'Copyright 2025 © Best Pizza Malta',
+    },
+    {
+      type: 'array',
+      name: 'socialMediaLinks',
+      fields: [
         {
-          slug: 'richTextWithBlocksField',
-          fields: [
-            richTextWithBlocksField,
-          ],
+          interfaceName: 'SocialMedia',
+          required: true,
+          type: 'select',
+          name: 'socialMedia',
+          options: socialIconNames,
         },
         {
-          slug: 'links',
-          interfaceName: 'IFooterLinks',
-          labels: {
-            plural: 'links',
-            singular: 'link',
-          },
-          fields: [
-            cmsLinks(),
-          ],
-        },
-        {
-          slug: 'icon-links',
-          interfaceName: 'IFooterIconLinks',
-          labels: {
-            plural: 'Icon links',
-            singular: 'Icon link',
-          },
-          fields: [
-            cmsLinks(),
-          ],
+          type: 'text',
+          required: true,
+          name: 'url',
         },
       ],
     },

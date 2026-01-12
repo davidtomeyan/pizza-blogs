@@ -2,7 +2,6 @@ import './global.css';
 import { Navbar } from '@/components/navbar/component';
 import { Footer } from '@/globals/Footer/component';
 import type { Viewport, Metadata } from 'next';
-import { envPublic } from '@/lib/env';
 import { RichText } from '@/components/rich-text';
 import {
   CookieConsentBanner,
@@ -11,6 +10,8 @@ import {
 import { fonts } from './fonts';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import { getCachedGlobal } from '@/lib/utils/get-global';
+import { getServerSideURL } from '@/lib/utils/get-url';
+import { Toaster } from '@/components/ui/sonner';
 
 export async function generateMetadata(): Promise<Metadata> {
   const verification: Metadata['verification'] = {};
@@ -41,7 +42,7 @@ export async function generateMetadata(): Promise<Metadata> {
       : '';
 
   return {
-    metadataBase: new URL(envPublic.cmsUrl),
+    metadataBase: new URL(getServerSideURL()),
     title: home?.meta?.title ?? '',
     description: home?.meta?.description ?? '',
     openGraph: {
@@ -90,6 +91,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
           <Navbar />
           <main className='flex flex-col grow'>{children}</main>
           <Footer />
+          <Toaster />
           {cookieConsentBannerEnabled && (
             <CookieConsentBanner
               rejectButtonLabel={rejectButtonLabel}

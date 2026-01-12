@@ -1,14 +1,18 @@
 import type { MetadataRoute } from 'next';
-import { envPublic } from '@/lib/env';
-import { getCachedCollection } from '@/lib/utils/get-collection';
+import { getServerSideURL } from '@/lib/utils/get-url';
+import { generateSitemaps as generateBlogSitemaps } from '@/app/(sitemap)/blogs/sitemap';
+import { generateSitemaps as generateRestaurantSitemaps } from '@/app/(sitemap)/restaurants/sitemap';
 
 export default async function robots(): Promise<MetadataRoute.Robots> {
-  const postsRes = await getCachedCollection({
-    collection: 'blogs',
-  })();
-  const sitemaps = Array.from({
-    length: postsRes?.totalPages ?? 0,
-  }).map((_, index) => `${envPublic.cmsUrl}/posts/sitemap/${index + 1}.xml`);
+  const blogsIds = await generateBlogSitemaps();
+  const RestaurantIds = await generateRestaurantSitemaps();
+  const blogSitemaps = blogsIds.map(
+    ({id}) => `${getServerSideURL()}/blogs/sitemap/${id}.xml`,
+  );
+  const restaurantSitemaps = RestaurantIds.map(
+    ({id}) => `${getServerSideURL()}/restaurants/sitemap/${id}.xml`,
+  );
+
   return {
     rules: {
       userAgent: '*',
@@ -19,8 +23,9 @@ export default async function robots(): Promise<MetadataRoute.Robots> {
       ],
     },
     sitemap: [
-      `${envPublic.cmsUrl}/sitemap.xml`,
-      ...sitemaps,
+      `${getServerSideURL()}/sitemap.xml`,
+      ...blogSitemaps,
+      ...restaurantSitemaps,
     ].filter(Boolean),
   };
 }

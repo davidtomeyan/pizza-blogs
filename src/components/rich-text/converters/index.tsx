@@ -13,7 +13,6 @@ import { uploadJSXConverter } from '@/components/rich-text/converters/upload'
 
 type NodeTypes = DefaultNodeTypes
 
-
 export const jsxConverter: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) => ({
   ...defaultConverters,
   ...headingConverter,

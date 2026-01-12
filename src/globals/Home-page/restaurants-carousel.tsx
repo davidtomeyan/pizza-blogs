@@ -29,47 +29,49 @@ import { Media } from '@/components/media';
 import { CarouselPagination } from '@/components/carousel';
 import React from 'react';
 import { Home } from '@/payload-types';
-function BlogsCarousel({ blogsCarousel }: { blogsCarousel?: Home['blogsCarousel'] }) {
-  if (!blogsCarousel || !blogsCarousel.enable) return null;
+function RestaurantsCarousel({ data }: { data?: Home['restaurantsCarousel'] }) {
+  if (!data?.restaurants?.length || !data.enable) return null;
   return (
     <Section
       className={cn([
         'bg-secondary w-full max-w-full mx-auto space-y-8 lg:gap-12 py-8 md:py-16',
       ])}>
-      {blogsCarousel?.enable && (blogsCarousel?.blogs?.length ?? 0) > 0 && (
+      {data?.enable && (data?.restaurants?.length ?? 0) > 0 && (
         <Carousel
           opts={{
             align: 'center',
             loop: false,
           }}>
-          <div className='layout flex flex-row items-end justify-center md:justify-between pb-12 gap-x-2 px-6 mx-auto'>
+          <div className='max-w-layout flex flex-row items-end justify-center md:justify-between pb-12 gap-x-2 px-6 mx-auto'>
             <h2 className='text-4xl text-center md:text-start font-semibold max-w-md'>
-              {blogsCarousel?.title}
+              {data?.title}
             </h2>
             <div className='hidden md:flex gap-2'>
               <CarouselPrevious className='static pointer-events-auto top-auto -right-0 -translate-y-0' />
               <CarouselNext className='static pointer-events-auto top-auto -right-0 -translate-y-0' />
             </div>
           </div>
-          <CarouselContent className='layout mx-auto'>
-            {blogsCarousel?.blogs?.map((blog, index) =>
-              isObject(blog) ? (
+          <CarouselContent className='max-w-layout mx-auto'>
+            {data?.restaurants?.map((restaurant, index) =>
+              isObject(restaurant) ? (
                 <CarouselItem
                   className={cn([
                     'md:basis-[95%] px-6 md:px-4',
                   ])}
                   key={`carousel-item-${index}`}>
-                  <div className='grid md:grid-cols-2 gap-4 p-4 lg:p-6 bg-background rounded-4xl'>
+                  <div className='grid md:grid-cols-2 gap-4 p-4 lg:p-4 bg-background rounded-4xl'>
                     <Card className='shadow-none border-none bg-secondary rounded-xl'>
                       <CardHeader>
-                        <CardTitle className='text-4xl'>
-                          #{index + 1} {blog.title}
+                        <CardTitle className='text-3xl lg:text-4xl'>
+                          #{index + 1} {restaurant.name}
                         </CardTitle>
-                        <CardDescription>{blog.desc}</CardDescription>
+                        <CardDescription>
+                          {restaurant.description}
+                        </CardDescription>
                       </CardHeader>
                       <CardContent>
                         <ItemGroup className='grid lg:grid-cols-2 gap-4'>
-                          {blog.details?.map((detail, index) => (
+                          {restaurant.details?.map((detail, index) => (
                             <Item
                               className='bg-background rounded-xl'
                               size={'sm'}
@@ -89,7 +91,7 @@ function BlogsCarousel({ blogsCarousel }: { blogsCarousel?: Home['blogsCarousel'
                         </ItemGroup>
                       </CardContent>
                       <CardFooter className='max-lg:flex-col gap-2 items-stretch lg:items-center lg:gap-4'>
-                        {blog.location && (
+                        {restaurant.location && (
                           <Button
                             asChild
                             className={'flex-1'}>
@@ -98,7 +100,7 @@ function BlogsCarousel({ blogsCarousel }: { blogsCarousel?: Home['blogsCarousel'
                                 rel: 'noopener noreferrer',
                                 target: '_blank',
                               }}
-                              href={blog.location}>
+                              href={restaurant.location}>
                               <MapPin /> Get Directions
                             </Link>
                           </Button>
@@ -107,7 +109,9 @@ function BlogsCarousel({ blogsCarousel }: { blogsCarousel?: Home['blogsCarousel'
                           asChild
                           className={'flex-1'}
                           variant={'outline'}>
-                          <Link href={`/blogs/${blog.id}`}>Read More</Link>
+                          <Link href={`/restaurants/${restaurant.id}`}>
+                            Read More
+                          </Link>
                         </Button>
                       </CardFooter>
                     </Card>
@@ -115,7 +119,7 @@ function BlogsCarousel({ blogsCarousel }: { blogsCarousel?: Home['blogsCarousel'
                       <Media
                         fill
                         className='max-w-full'
-                        media={blog.image}
+                        media={restaurant.image}
                       />
                     </div>
                   </div>
@@ -125,7 +129,7 @@ function BlogsCarousel({ blogsCarousel }: { blogsCarousel?: Home['blogsCarousel'
           </CarouselContent>
           <div className='hover:cursor-pointer pt-12 md:pt-6'>
             <CarouselPagination
-              length={blogsCarousel?.blogs?.length}
+              length={data?.restaurants?.length}
               opts={{
                 loop: false,
               }}
@@ -140,4 +144,4 @@ function BlogsCarousel({ blogsCarousel }: { blogsCarousel?: Home['blogsCarousel'
   );
 }
 
-export { BlogsCarousel };
+export { RestaurantsCarousel };

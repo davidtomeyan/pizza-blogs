@@ -31,7 +31,7 @@ export function CookieConsentBanner({
   }
   return (
     <>
-      <div className="fixed bg-secondary bottom-0 left-0 right-0 bg-background border-t z-50">
+      <div className="fixed bottom-0 left-0 right-0 bg-background border-t z-50">
         <div className="max-w-9xl mx-auto flex flex-col gap-4 px-6 lg:gap-8 lg:flex-row lg:px-16 py-4">
           <div className="grow">{children}</div>
           <div className="flex gap-4 justify-end">

@@ -3,10 +3,9 @@ import {
   authenticated,
   authenticatedOrPublished,
 } from '@/lib/utils/access/auth';
-import { revalidateGlobalHook } from '@/lib/utils/revalidate-global';
-import { linkTypeRadio, linkTypes, newTab } from '@/fields/cms-link';
-import { HeroSplit } from '@/blocks/hero-split/config';
-import { RichTextWithBlocks } from '@/blocks/rich-text-with-media/config';
+import { revalidateGlobal } from '@/lib/utils/revalidate-global';
+import { cmsLink } from '@/fields/cms-link';
+import { richTextWithBlocksField } from '@/fields/rich-text-with-blocks';
 
 export const AboutUsPage: GlobalConfig<'about-us'> = {
   slug: 'about-us',
@@ -20,7 +19,7 @@ export const AboutUsPage: GlobalConfig<'about-us'> = {
   },
   hooks: {
     afterChange: [
-      revalidateGlobalHook,
+      (ctx) => revalidateGlobal(ctx.global.slug),
     ],
   },
   fields: [
@@ -49,45 +48,10 @@ export const AboutUsPage: GlobalConfig<'about-us'> = {
                 },
               },
             },
-            {
-              required: true,
-              name: 'link',
-              type: 'group',
-              label: 'CTA Link',
-              interfaceName: 'ICTALink',
-              admin: {
-                hideGutter: true,
-              },
-              fields: [
-                {
-                  type: 'row',
-                  fields: [
-                    linkTypeRadio({
-                      defaultValue: 'custom',
-                    }),
-                    newTab({
-                      defaultValue: true,
-                    }),
-                  ],
-                },
-                {
-                  type: 'row',
-                  fields: [
-                    ...linkTypes,
-                    {
-                      required: true,
-                      defaultValue: 'Get started',
-                      name: 'label',
-                      type: 'text',
-                      admin: {
-                        width: '50%',
-                      },
-                      label: 'Label',
-                    },
-                  ],
-                },
-              ],
-            },
+            cmsLink({
+              name: 'ctaLink',
+              label:"CTA Link",
+            }),
             {
               type: 'checkbox',
               name: 'enable',
@@ -97,21 +61,8 @@ export const AboutUsPage: GlobalConfig<'about-us'> = {
         },
         {
           label: 'Content',
-          name: 'content',
           fields: [
-            {
-              type: 'blocks',
-              name: 'blocks',
-              blocks: [
-                HeroSplit,
-                RichTextWithBlocks,
-              ],
-            },
-            {
-              type: 'checkbox',
-              name: 'enable',
-              defaultValue: true,
-            },
+            richTextWithBlocksField,
           ],
         },
         {
@@ -121,14 +72,23 @@ export const AboutUsPage: GlobalConfig<'about-us'> = {
             {
               type: 'text',
               name: 'label',
+              admin: {
+                condition: (_, siblingData) => !!siblingData.enable,
+              },
             },
             {
               type: 'text',
               name: 'title',
+              admin: {
+                condition: (_, siblingData) => !!siblingData.enable,
+              },
             },
             {
               type: 'textarea',
               name: 'description',
+              admin: {
+                condition: (_, siblingData) => !!siblingData.enable,
+              },
             },
             {
               type: 'upload',
@@ -139,46 +99,14 @@ export const AboutUsPage: GlobalConfig<'about-us'> = {
                   contains: 'image',
                 },
               },
-            },
-            {
-              required: true,
-              name: 'link',
-              type: 'group',
-              label: 'CTA Link',
-              interfaceName: 'ICTALink',
               admin: {
-                hideGutter: true,
+                condition: (_, siblingData) => !!siblingData.enable,
               },
-              fields: [
-                {
-                  type: 'row',
-                  fields: [
-                    linkTypeRadio({
-                      defaultValue: 'custom',
-                    }),
-                    newTab({
-                      defaultValue: true,
-                    }),
-                  ],
-                },
-                {
-                  type: 'row',
-                  fields: [
-                    ...linkTypes,
-                    {
-                      required: true,
-                      defaultValue: 'Get started',
-                      name: 'label',
-                      type: 'text',
-                      admin: {
-                        width: '50%',
-                      },
-                      label: 'Label',
-                    },
-                  ],
-                },
-              ],
             },
+            cmsLink({
+              name: 'link',
+              label:"CTA Link",
+            }),
             {
               type: 'checkbox',
               name: 'enable',

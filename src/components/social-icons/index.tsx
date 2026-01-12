@@ -1,4 +1,4 @@
-import type { IconBaseProps } from 'react-icons'
+import type { IconBaseProps } from 'react-icons';
 
 import {
   FaFacebook,
@@ -21,16 +21,15 @@ import {
   FaBehance,
   FaPhone,
   FaGoogle,
-} from 'react-icons/fa'
-import { SiMaildotru } from 'react-icons/si'
-
-import { SiGmail, SiMedium } from 'react-icons/si'
-import { BsTwitterX } from 'react-icons/bs'
+} from 'react-icons/fa';
+import { FaXTwitter } from 'react-icons/fa6';
+import { SiMaildotru } from 'react-icons/si';
+import { SiGmail, SiMedium } from 'react-icons/si';
 
 export const socialIconsMap = {
   facebook: FaFacebook,
   gmail: SiGmail,
-  x: BsTwitterX,
+  x: FaXTwitter,
   medium: SiMedium,
   email: SiMaildotru,
   phone: FaPhone,
@@ -52,17 +51,18 @@ export const socialIconsMap = {
   dribbble: FaDribbble,
   google: FaGoogle,
   behance: FaBehance,
-} as const
+} as const;
 
-export const socialIconNames = Object.keys(socialIconsMap) as SocialIconName[]
-export type SocialIconName = keyof typeof socialIconsMap
+export const socialIconNames = Object.keys(socialIconsMap) as SocialIconName[];
+export type SocialIconName = keyof typeof socialIconsMap;
 
-export function SocialIcons(
-  {
-    iconName,
-    ...props
-  }: { iconName: SocialIconName } & IconBaseProps) {
-  const Icon = socialIconsMap[iconName]
-  if (!Icon) return null
-  return <Icon {...props} />
+export function SocialIcons({
+  iconName,
+  ...props
+}: {
+  iconName: SocialIconName;
+} & IconBaseProps) {
+  const Icon = socialIconsMap[iconName];
+  if (!Icon) return null;
+  return <Icon {...props} />;
 }

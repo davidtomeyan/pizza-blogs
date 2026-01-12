@@ -17,6 +17,10 @@ import { Blogs } from '@/collections/Blogs';
 import { HomePage } from '@/globals/Home-page/config';
 import { Restaurants } from '@/collections/Restaurants';
 import { AboutUsPage } from '@/globals/About-us-page/config';
+import { PrivacyPolicy } from '@/globals/Privacy-policy/config';
+import { TermsOfService } from '@/globals/Terms-of-service/config';
+import { CookiesSettings } from '@/globals/Cookies-settings/config';
+import {ContactMessages} from "@/collections/Contact-messages/config";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -55,10 +59,14 @@ export default buildConfig({
     Users,
     Media,
     Blogs,
+    ContactMessages
   ],
   globals: [
     AboutUsPage,
     HomePage,
+    PrivacyPolicy,
+    TermsOfService,
+    CookiesSettings,
     Footer,
     Site,
   ],

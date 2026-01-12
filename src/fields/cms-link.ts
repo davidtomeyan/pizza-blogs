@@ -1,42 +1,11 @@
 import {
   ArrayField,
-  Field,
   GroupField,
-  RowField,
   SelectField,
-  RadioField,
-  CheckboxField,
 } from 'payload';
-import { cmsLinkVariantOptions } from '@/components/cms-link';
 import { mergeFieldsSafely } from '@/lib/utils';
 import { lucideIconNames } from '@/components/lucide-icon-names';
 import { socialIconNames } from '@/components/social-icons';
-
-const variantOptions = Object.values(cmsLinkVariantOptions);
-
-export const linkTypes: Field[] = [
-  {
-    name: 'reference',
-    type: 'relationship',
-    admin: {
-      condition: (_, siblingData) => siblingData?.type === 'reference',
-    },
-    label: 'Document to link to',
-    relationTo: [
-        "blogs"
-    ],
-    required: true,
-  },
-  {
-    name: 'url',
-    type: 'text',
-    admin: {
-      condition: (_, siblingData) => siblingData?.type === 'custom',
-    },
-    label: 'Custom URL',
-    required: true,
-  },
-];
 
 export const linkSizes = (props: Partial<SelectField> = {}): SelectField =>
   mergeFieldsSafely(
@@ -57,70 +26,6 @@ export const linkSizes = (props: Partial<SelectField> = {}): SelectField =>
     props,
   );
 
-export const linkVariant = (props: Partial<SelectField> = {}): SelectField =>
-  mergeFieldsSafely(
-    {
-      name: 'variant',
-      type: 'select',
-      dbName: 'link_variant',
-      admin: {
-        description: 'Choose how the link should be rendered.',
-      },
-      hasMany: false,
-      defaultValue: 'default',
-      options: variantOptions,
-    } satisfies SelectField,
-    props,
-  );
-
-export const linkTypeRadio = (props: Partial<RadioField> = {}): RadioField =>
-  mergeFieldsSafely(
-    {
-      name: 'type',
-      type: 'radio',
-      dbName: 'link_type',
-      admin: {
-        layout: 'horizontal',
-        width: '50%',
-      },
-      defaultValue: 'reference',
-      options: [
-        {
-          label: 'Internal link',
-          value: 'reference',
-        },
-        {
-          label: 'Custom URL',
-          value: 'custom',
-        },
-      ],
-    } satisfies RadioField,
-    props,
-  );
-
-export const newTab = (props: Partial<CheckboxField> = {}): CheckboxField =>
-  mergeFieldsSafely(
-    {
-      name: 'newTab',
-      type: 'checkbox',
-      admin: {
-        style: {
-          alignSelf: 'flex-end',
-        },
-        width: '50%',
-      },
-      label: 'Open in new tab',
-    } satisfies CheckboxField,
-    props,
-  );
-
-export const linkSettings = (): RowField => ({
-  type: 'row',
-  fields: [
-    linkTypeRadio(),
-    newTab(),
-  ],
-});
 export const dynamicIcons = (props: Partial<SelectField> = {}): SelectField =>
   mergeFieldsSafely(
     {
@@ -149,12 +54,26 @@ export const cmsLink = (props: Partial<GroupField> = {}): GroupField =>
         hideGutter: true,
       },
       fields: [
-        linkSettings(),
-        linkVariant(),
+        {
+          name: 'newTab',
+          type: 'checkbox',
+          admin: {
+            style: {
+              alignSelf: 'flex-end',
+            },
+            width: '50%',
+          },
+          label: 'Open in new tab',
+        },
         {
           type: 'row',
           fields: [
-            ...linkTypes,
+            {
+              name: 'url',
+              type: 'text',
+              label: 'URL',
+              required: true,
+            },
             {
               name: 'label',
               type: 'text',
@@ -163,13 +82,7 @@ export const cmsLink = (props: Partial<GroupField> = {}): GroupField =>
               },
               label: 'Label',
             },
-            dynamicIcons(),
-            linkSizes(),
           ],
-        },
-        {
-          type: 'checkbox',
-          name: 'iconRight',
         },
       ],
     } satisfies GroupField,

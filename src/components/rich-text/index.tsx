@@ -6,16 +6,15 @@ import { hasText } from '@payloadcms/richtext-lexical/shared'
 
 type Props = {
   data: SerializedEditorState;
-  animated?: boolean
 } & React.HTMLAttributes<HTMLDivElement>
 
-export function RichText({ animated = true, ...props }: Props) {
+export function RichText({ ...props }: Props) {
   const { className, ...rest } = props
   if (!hasText(rest.data)) return null
   return (
       <RichTextConverter
         className={cn([
-          'prose prose-neutral prose-lg lg:prose-2xl',
+          'prose',
           className,
         ])}
         converters={jsxConverter}

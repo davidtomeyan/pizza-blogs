@@ -1,9 +1,7 @@
 import { CMSLink as ICMSLink } from '@/payload-types';
 import Link from 'next/link';
-import { getCMSLinkProps } from '@/lib/utils/get-cms-llnk-props';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { Icon } from '@/components/icon';
 
 export {
   cmsLinkVariantOptions,
@@ -15,34 +13,31 @@ type CMSLinkProps = ICMSLink & {
 
 export function CMSLink({
   className,
-  size,
-  icon,
-  iconRight,
+  children,
   ...props
-}: CMSLinkProps) {
-  const cmsLinkProps = getCMSLinkProps(props);
-  if (!cmsLinkProps) return null;
-  const { href, newTabProps, variant, label } = cmsLinkProps;
-  const isOnlyIcon = !!icon && size?.startsWith('icon');
+}: CMSLinkProps & React.ComponentProps<typeof Button>) {
+  const { url = '#', newTab, variant, label } = props;
+  const newTabProps = newTab
+    ? {
+        rel: 'noopener noreferrer',
+        target: '_blank',
+      }
+    : {};
+
   return (
     <Button
       asChild
-      size={size ?? 'default'}
       className={cn([
         variant === 'link'
           ? 'text-accent-foreground underline hover:no-underline'
           : '',
-        {
-          'flex-row-reverse': iconRight && icon,
-        },
         className,
       ])}
       variant={variant}>
       <Link
         {...newTabProps}
-        href={href}>
-        <Icon iconName={icon} />
-        {!isOnlyIcon && label}
+        href={url}>
+        {children ?? label}
       </Link>
     </Button>
   );

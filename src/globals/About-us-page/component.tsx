@@ -1,118 +1,115 @@
-import { Fragment } from 'react';
-import { cn } from '@/lib/utils';
-import Link from 'next/link';
-import { Logo } from '@/components/logo';
-import { CMSLink } from '@/components/cms-link';
-import { Separator } from '@/components/ui/separator';
 import { RichText } from '@/components/rich-text';
 import { getCachedGlobal } from '@/lib/utils/get-global';
+import { Section } from '@/components/section';
+import { CMSLink } from '@/components/cms-link';
+import { Media } from '@/components/media';
+import React from 'react';
+import { cn } from '@/lib/utils';
+import { ArrowRight } from 'lucide-react';
 
-export function chunkArray<T>(
-  array: readonly T[] | T[],
-  chunkSize: number,
-): T[][] {
-  const result: T[][] = [];
-  for (let i = 0; i < array.length; i += chunkSize) {
-    result.push(array.slice(i, i + chunkSize) as T[]);
-  }
-  return result;
-}
-
-export async function Footer() {
-  const res = await getCachedGlobal({
-    slug: 'footer',
+export async function AboutUsPage() {
+  const data = await getCachedGlobal({
+    slug: 'about-us',
   })();
-
-  const footerBlocks = res?.footerBlocks?.length
-    ? ([
-        {
-          blockType: 'jsx',
-          element: (
-            <Link href='/'>
-              <Logo />
-            </Link>
-          ),
-        },
-        ...res.footerBlocks,
-      ] as const)
-    : ([
-        {
-          blockType: 'jsx',
-          element: (
-            <Link href='/'>
-              <Logo />
-            </Link>
-          ),
-        },
-      ] as const);
-
-  const footerGroups = chunkArray(footerBlocks, 3);
+  const { hero, ctaSection } = data;
   return (
-    <footer className='flex justify-center items-center'>
-      <div
-        className={cn([
-          'flex max-w-9xl flex-1 flex-col px-4 md:px-8 lg:px-12 py-14 xl:py-20 min-w-0 gap-y-14',
-        ])}>
-        {footerGroups.map((group, gIdx) => (
-          <Fragment key={`group-${gIdx}`}>
+    <div className='md:pb-16'>
+      {hero && (
+        <Section
+          className={cn([
+            'w-full flex justify-center min-w-0 items-center overflow-hidden relative',
+          ])}>
+          <div className='max-w-6xl w-full flex min-w-0 flex-col justify-center items-center md:items-start px-6 lg:px-8 py-12 md:pt-28 md:pb-16 z-20'>
             <div
               className={cn([
-                'flex-1 flex flex-col justify-center  lg:flex-row  lg:justify-between  gap-y-12',
-                gIdx === 1 && 'flex-col-reverse',
+                hero.image && 'text-white',
+                'flex flex-col text-center md:text-start items-center md:items-start gap-y-6 max-w-sm',
               ])}>
-              {group.map((block, idx, array) => (
-                <div
+              {hero.title && (
+                <h1 className='text-4xl font-bold'>{hero.title}</h1>
+              )}
+              {hero.description && (
+                <p className='text-sm'>{hero.description}</p>
+              )}
+              {hero.ctaLink && (
+                <CMSLink
+                  {...hero.ctaLink}
+                  size='lg'
                   className={cn([
-                    'flex flex-col items-center gap-x-4 gap-y-4 justify-center flex-1 px-2 lg:flex-row lg:justify-start',
-                    block.blockType === 'icon-links' && 'flex-row',
-                    idx === 1 && 'lg:justify-center',
-                    idx === 2 && 'lg:justify-end',
-                    array.length === 2 && idx === 1 && 'lg:justify-end',
+                    'grow md:max-w-sm',
                   ])}
-                  key={`footer-block-${idx}`}>
-                  {block.blockType === 'jsx' && block.element}
-                  {block.blockType === 'richTextWithBlocksField'
-                    && block.content && (
-                      <RichText
-                        className='text-muted-foreground'
-                        data={block.content}
-                      />
-                    )}
-                  {block.blockType === 'links'
-                    && block.links?.map((i, index) => {
-                      return (
-                        <CMSLink
-                          className={cn(
-                            (i.link?.variant === 'link'
-                              || i.link?.variant === 'ghost')
-                              && 'no-underline hover:underline text-muted-foreground!  hover:text-foreground ',
-                          )}
-                          {...i.link}
-                          key={`footer-link-${index}`}
-                        />
-                      );
-                    })}
-                  {block.blockType === 'icon-links'
-                    && block.links?.map((i, index) => {
-                      return (
-                        <CMSLink
-                          className={cn(
-                            i.link?.variant === 'link'
-                              && 'no-underline hover:underline text-muted-foreground  hover:text-foreground ',
-                            "[&_svg:not([class*='size-'])]:size-5",
-                          )}
-                          {...i.link}
-                          key={`footer-link-${index}`}
-                        />
-                      );
-                    })}
-                </div>
-              ))}
+                />
+              )}
             </div>
-            <Separator className={'last:hidden'} />
-          </Fragment>
-        ))}
-      </div>
-    </footer>
+          </div>
+          {hero.image && (
+            <>
+              <div
+                className={cn([
+                  'absolute inset-0 z-10',
+                  'bg-gradient-to-tr',
+                  'from-black/80',
+                  'via-black/35',
+                  'to-transparent',
+                ])}
+              />
+              <div className='absolute inset-0 z-0'>
+                <Media
+                  fill
+                  className='object-cover'
+                  media={hero.image}
+                />
+              </div>
+            </>
+          )}
+        </Section>
+      )}
+      {data.content && (
+        <RichText
+          className='max-w-6xl px-6 lg:px-8 mx-auto'
+          data={data.content}
+        />
+      )}
+      {ctaSection?.enable && (
+        <Section className='max-w-layout mx-auto w-full px-0 md:px-6 lg:px-8'>
+          <div className='text-center md:text-start bg-primary text-primary-foreground md:rounded-4xl grid max-md:pt-8 gap-15 md:grid-cols-2 overflow-hidden'>
+            <div className='px-6 md:ps-16 py-16 '>
+              <div className='grid gap-4'>
+                {ctaSection?.label && (
+                  <span className='text-sm text-muted'>
+                    {ctaSection?.label}
+                  </span>
+                )}
+                {ctaSection?.title && (
+                  <h2 className='empty:hidden text-4xl font-semibold'>
+                    {ctaSection?.title}
+                  </h2>
+                )}
+              </div>
+              <div className='flex flex-col items-center md:items-start gap-6 mt-6 md:mt-28'>
+                {ctaSection?.description && (
+                  <p className='text-muted'>{ctaSection?.description}</p>
+                )}
+                <CMSLink
+                  {...ctaSection.link}
+                  variant='secondary'
+                  size='sm'>
+                  {ctaSection?.link?.label}
+                  <ArrowRight />
+                </CMSLink>
+              </div>
+            </div>
+            <div className='max-md:ps-10 md:pt-16'>
+              <div className='relative max-md:aspect-[1.28] size-full rounded-tl-4xl overflow-hidden'>
+                <Media
+                  fill
+                  media={ctaSection.image}
+                />
+              </div>
+            </div>
+          </div>
+        </Section>
+      )}
+    </div>
   );
 }

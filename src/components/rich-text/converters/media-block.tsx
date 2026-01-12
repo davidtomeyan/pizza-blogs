@@ -1,90 +1,95 @@
-import { JSXConverters } from '@payloadcms/richtext-lexical/react'
-import { SerializedBlockNode } from '@payloadcms/richtext-lexical'
-import { IRichTextMediaBlock, IRichTextInlineMediaBlock } from '@/payload-types'
-import { Media } from '@/components/media'
-import { AspectRatio } from '@/components/ui/aspect-ratio'
-import { cn } from '@/lib/utils'
+import { JSXConverters } from '@payloadcms/richtext-lexical/react';
+import { SerializedBlockNode } from '@payloadcms/richtext-lexical';
+import { IRichTextMediaBlock, IListItemsBlock } from '@/payload-types';
+import { Media } from '@/components/media';
+import { cn } from '@/lib/utils';
+import { RichText } from '@/components/rich-text';
+import {
+  Item,
+  ItemTitle,
+  ItemDescription,
+  ItemContent,
+  ItemMedia,
+} from '@/components/ui/item';
+import { Icon } from '@/components/icon';
 
 export const blocksJSXConverter: JSXConverters<SerializedBlockNode> = {
   blocks: {
-    'media-block': ({ node }: { node: { fields: IRichTextMediaBlock } }) => {
-      if (!node.fields) return null
-      const { fields } = node
-      const limited = !!fields.constrainWidth
-
-      const style = limited && fields.maxWidth
-        ? { maxWidth: fields.maxWidth }
-        : undefined
-
-      const alignClass =
-        limited
-          ? fields.align === 'right'
-            ? 'ml-auto'
-            : fields.align === 'center'
-              ? 'mx-auto'
-              : '' // left
-          : ''
-
+    'list-items': ({
+      node,
+    }: {
+      node: {
+        fields: IListItemsBlock;
+      };
+    }) => {
       return (
-        <div className="mt-10">
-          <div className={cn([
-            'mb-10', alignClass,
-          ])} style={style}>
-            {fields.aspect === 'ratio' ? (
-              <AspectRatio
-                className={'rounded-lg bg-accent relative overflow-hidden'}
-                ratio={fields.aspectRatio ?? 1}
-              >
-                <Media
-                  placeholderEnabled={false}
-                  priority
-                  className={'mt-0!'}
-                  fill
-                  media={fields.media}
-                />
-              </AspectRatio>
-            ) : (
-              <Media priority
-                     placeholderEnabled={false}
-                     className="rounded-lg overflow-hidden max-w-full m-0!"
-                     media={fields.media} />
+        <ul className='flex flex-col gap-y-4 md:gap-y-8 mt-8! p-0!'>
+          {node.fields.listItems?.map((i) => (
+            <Item
+              asChild
+              size={'sm'}
+              key={i.id}>
+              <li className='m-0! p-0!'>
+                {i.icon && (
+                  <ItemMedia
+                    className='bg-background'
+                    variant='icon'>
+                    <Icon iconName={i.icon} />
+                  </ItemMedia>
+                )}
+                <ItemContent>
+                  <ItemTitle className='m-0!'>{i.title}</ItemTitle>
+                  <ItemDescription className='m-0! text-sm line-clamp-none text-wrap'>
+                    {i.description}
+                  </ItemDescription>
+                </ItemContent>
+              </li>
+            </Item>
+          ))}
+        </ul>
+      );
+    },
+
+    'media-block': ({
+      node,
+    }: {
+      node: {
+        fields: IRichTextMediaBlock;
+      };
+    }) => {
+      if (!node.fields) return null;
+      const { fields } = node;
+      return (
+        <div className='grid grid-cols-1 pt-16 md:py-16 gap-x-8 md:grid-cols-2'>
+          <div
+            className={cn([
+              'hidden md:block relative overflow-hidden',
+              node.fields.align === 'right' && 'md:order-2',
+            ])}>
+            <Media
+              placeholderEnabled={false}
+              fill={true}
+              className='rounded-lg max-w-full m-0!'
+              media={fields.media}
+            />
+          </div>
+          <div className='block md:hidden'>
+            <Media
+              placeholderEnabled={false}
+              className='rounded-lg max-w-full m-0!'
+              media={fields.media}
+            />
+          </div>
+          <div className='pt-8 md:py-14'>
+            {fields.caption && (
+              <RichText
+                className='prose-sm max-w-5xl m-0! p-0! [&_p]:text-muted-foreground'
+                data={fields.caption}
+              />
             )}
           </div>
         </div>
-      )
+      );
     },
   },
-  inlineBlocks: {
-    'inline-media-block': ({ node }: { node: { fields: IRichTextInlineMediaBlock } }) => {
-      if (!node.fields) return null
-      const { fields } = node
-      const limited = !!fields.constrainWidth
-
-      const style = limited && fields.maxWidth
-        ? { maxWidth: `${fields.maxWidth}px` }
-        : undefined
-
-      const floatClass =
-        fields.constrainWidth
-          ? fields.align === 'right'
-            ? 'lg:float-right ml-6 mb-2'
-            : fields.align === 'center'
-              ? 'block mx-auto'
-              : 'lg:float-left mr-6 mb-2'
-          : ''
-
-      return (
-        <Media
-          placeholderEnabled={false}
-          priority
-          className={cn([
-            'align-top  w-full rounded-lg overflow-hidden my-4!', floatClass,
-            limited ? 'inline' : 'block',
-          ])}
-          style={style}
-          media={fields.media} />
-      )
-    },
-  },
-
-}
+};

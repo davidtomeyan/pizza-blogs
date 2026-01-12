@@ -1,116 +1,75 @@
-import type { CollectionConfig } from 'payload';
-import { revalidateTag } from 'next/cache';
+import type {CollectionConfig} from 'payload';
 import {
-  authenticated,
-  authenticatedOrPublished,
+    authenticated,
+    authenticatedOrPublished,
 } from '@/lib/utils/access/auth';
-import { richTextWithBlocksField } from '@/fields/rich-text-with-blocks';
+import {richTextWithBlocksField} from '@/fields/rich-text-with-blocks';
 import {
-  revalidateCollection,
-  revalidateCollectionById,
+    revalidateCollection,
+    revalidateCollectionById,
 } from '@/lib/utils/revalidate-collection';
+import {revalidateGlobal} from "@/lib/utils/revalidate-global";
 
 export const Blogs: CollectionConfig<'blogs'> = {
-  slug: 'blogs',
-  access: {
-    create: authenticated,
-    delete: authenticated,
-    read: authenticatedOrPublished,
-    update: authenticated,
-  },
-  defaultPopulate: {
-    title: true,
-    desc: true,
-    image: true,
-    details: true,
-    location: true,
-  },
-  hooks: {
-    afterChange: [
-      ({ doc, collection }) => {
-        revalidateCollection(collection.slug);
-        revalidateCollectionById(collection.slug, doc.id);
-      },
-    ],
-    afterDelete: [
-      ({ doc, collection }) => {
-        revalidateCollection(collection.slug);
-        revalidateCollectionById(collection.slug, doc.id);
-      },
-    ],
-  },
-  admin: {
-    group: 'Data',
-    useAsTitle: 'title',
-    defaultColumns: [
-      'title',
-      'updatedAt',
-    ],
-  },
-  fields: [
-    {
-      type: 'upload',
-      name: 'image',
-      relationTo: 'media',
-      filterOptions: {
-        mimeType: {
-          contains: 'image',
-        },
-      },
+    slug: 'blogs',
+    access: {
+        create: authenticated,
+        delete: authenticated,
+        read: authenticatedOrPublished,
+        update: authenticated,
     },
-    {
-      type: 'text',
-      name: 'title',
-      label: 'Title',
-      required: true,
+    defaultPopulate: {
+        title: true,
+        desc: true,
+        image: true,
     },
-    {
-      type: 'textarea',
-      name: 'desc',
-      label: 'Description',
-      required: true,
+    hooks: {
+        afterChange: [
+            ({doc, collection}) => {
+                revalidateCollection(collection.slug);
+                revalidateCollectionById(collection.slug, doc.id);
+                revalidateGlobal("home")
+            },
+        ],
+        afterDelete: [
+            ({doc, collection}) => {
+                revalidateCollection(collection.slug);
+                revalidateGlobal("home")
+                revalidateCollectionById(collection.slug, doc.id);
+            },
+        ],
     },
-    {
-      type: 'text',
-      name: 'location',
-      required: false,
+    admin: {
+        group: 'Data',
+        useAsTitle: 'title',
+        defaultColumns: [
+            'title',
+            'updatedAt',
+        ],
     },
-    {
-      type: 'array',
-      name: 'details',
-      maxRows: 4,
-      fields: [
+    fields: [
         {
-          type: 'row',
-          fields: [
-            {
-              type: 'text',
-              name: 'title',
-              required: true,
-              admin: {
-                width: '50%',
-              },
+            type: 'upload',
+            name: 'image',
+            relationTo: 'media',
+            filterOptions: {
+                mimeType: {
+                    contains: 'image',
+                },
             },
-            {
-              type: 'text',
-              name: 'value',
-              label: 'Value (optional)',
-              admin: {
-                width: '50%',
-              },
-            },
-          ],
         },
         {
-          type: 'textarea',
-          name: 'desc',
-          label: 'Description',
-          admin: {
-            description: 'Optional — short text shown under title/value pair',
-          },
+            type: 'text',
+            name: 'title',
+            label: 'Title',
+            required: true,
         },
-      ],
-    },
-    richTextWithBlocksField,
-  ],
+        {
+            type: 'textarea',
+            name: 'desc',
+            label: 'Description',
+            required: true,
+        },
+        richTextWithBlocksField,
+    ],
 };

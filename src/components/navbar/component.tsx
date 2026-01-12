@@ -16,7 +16,7 @@ export function Navbar() {
   return (
     <PopoverProvider>
       <header className='h-(--header-height) flex justify-center w-full bg-background sticky top-0 left-0 z-50 border-b border-border/70'>
-        <div className='grow flex items-center justify-between layout gap-5 px-4 lg:px-6 py-4 min-w-0'>
+        <div className='grow flex items-center justify-between max-w-layout gap-5 px-4 lg:px-6 py-4 min-w-0'>
           <Link
             href='/'
             className='h-full flex'>

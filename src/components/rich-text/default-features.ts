@@ -26,7 +26,7 @@ import {
 } from '@payloadcms/richtext-lexical';
 import { colors } from './converters/colors';
 import { Field } from 'payload';
-import { inlineMediaBlock, mediaBlock } from '@/blocks/madia-block/config';
+import { mediaBlock } from '@/blocks/madia-block/config';
 
 export type AlignMode = 'left' | 'center' | 'right';
 
@@ -149,7 +149,8 @@ export const defaultFeatures = [
   ChecklistFeature(),
   LinkFeature({
     enabledCollections: [
-        "blogs"
+      "blogs",
+      "restaurants",
     ],
   }),
   BlockquoteFeature(),
@@ -161,9 +162,6 @@ export const defaultFeatures = [
   BlocksFeature({
     blocks: [
       mediaBlock,
-    ],
-    inlineBlocks: [
-      inlineMediaBlock,
     ],
   }),
   UploadFeature({

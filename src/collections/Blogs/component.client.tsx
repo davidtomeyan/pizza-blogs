@@ -4,7 +4,6 @@ import { PayloadSDK } from '@payloadcms/sdk';
 import { usePagination } from '@/lib/search-params/hooks/use-pagination';
 import { PaginationSearchParams } from '@/components/pagination-search-params';
 import { Config } from '@/payload-types';
-import { envPublic } from '@/lib/env';
 import useSWR from 'swr';
 import {
   Card,
@@ -20,6 +19,7 @@ import { intlFormat } from 'date-fns';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useEffect, useState } from 'react';
 import { isNumber } from '@/lib/utils/is-number';
+import { getClientSideURL } from '@/lib/utils/get-url';
 
 const sdk = new PayloadSDK<Config>({
   baseInit: {
@@ -27,14 +27,13 @@ const sdk = new PayloadSDK<Config>({
       'content-type': 'application/json',
     },
   },
-  baseURL: `${envPublic.cmsUrl}/api`,
+  baseURL: `${getClientSideURL()}/api`,
 });
 
 const RATIO = 373 / 245;
 const LIMIT = 6;
 
-export function RestaurantsListPagination() {
-
+export function BlogListPagination() {
   const [totalPages, setTotalPages] = useState<number>(0);
 
   const [state] = usePagination({
@@ -45,7 +44,7 @@ export function RestaurantsListPagination() {
 
   const { data, isLoading } = useSWR(
     [
-      'restaurants',
+      'blogs',
       state.page,
       state.limit,
     ] as const,
@@ -66,9 +65,11 @@ export function RestaurantsListPagination() {
     data?.totalPages,
     isLoading,
   ]);
-
+  if (!data?.docs.length) return null;
   return (
-    <div className={'grid gap-8 md:gap-14'}>
+    <div
+      id={'blog-list'}
+      className={'grid gap-8 md:gap-14'}>
       <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-8'>
         {isLoading ? (
           <SkeletonList />
@@ -76,10 +77,8 @@ export function RestaurantsListPagination() {
           data?.docs.map((doc) => (
             <Link
               key={doc.id}
-              href={'/'}>
-              <Card
-                className='p-2 rounded-3xl hover:shadow-2xl transition-all'
-                key={doc.id}>
+              href={`/blogs/${doc.id}`}>
+              <Card className='p-2 rounded-3xl hover:shadow-2xl transition-all'>
                 <AspectRatio
                   className='relative overflow-hidden rounded-2xl'
                   ratio={RATIO}>
@@ -98,8 +97,8 @@ export function RestaurantsListPagination() {
                   </Badge>
                 </AspectRatio>
                 <CardHeader className='px-4 pb-4'>
-                  <CardTitle className='text-2xl'>{doc.shortTitle}</CardTitle>
-                  <CardDescription>{doc.shortDescription}</CardDescription>
+                  <CardTitle className='text-xl'>{doc.title}</CardTitle>
+                  <CardDescription>{doc.desc}</CardDescription>
                 </CardHeader>
               </Card>
             </Link>

@@ -3,11 +3,12 @@ import { CMSLink } from '@/components/cms-link';
 import { Media } from '@/components/media';
 import React from 'react';
 import { Home } from '@/payload-types';
+import { ArrowRight } from 'lucide-react';
 
 function CtaSection({ ctaSection }: { ctaSection?: Home['ctaSection'] }) {
   if (!ctaSection || !ctaSection.enable) return null;
   return (
-    <Section className='layout mx-auto w-full md:px-6'>
+    <Section className='max-w-layout mx-auto w-full md:px-6'>
       <div className='text-center md:text-start bg-primary text-primary-foreground md:rounded-4xl grid max-md:pt-8 gap-15 md:grid-cols-2 overflow-hidden'>
         <div className='px-6 md:ps-16 py-16 '>
           <div className='grid gap-4'>
@@ -25,12 +26,12 @@ function CtaSection({ ctaSection }: { ctaSection?: Home['ctaSection'] }) {
               <p className='text-muted'>{ctaSection?.description}</p>
             )}
             <CMSLink
-              {...ctaSection.link}
+              {...ctaSection.ctaLink}
               variant='secondary'
-              size='sm'
-              iconRight
-              icon={'arrow-right'}
-            />
+              size='sm'>
+              {ctaSection.ctaLink?.label}
+              <ArrowRight />
+            </CMSLink>
           </div>
         </div>
         <div className='max-md:ps-10 md:pt-16'>

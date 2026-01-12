@@ -8,14 +8,87 @@
 
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ICMSLinks".
+ * via the `definition` "SocialMedia".
  */
-export type ICMSLinks =
-  | {
-      link?: CMSLink;
-      id?: string | null;
-    }[]
-  | null;
+export type SocialMedia =
+  | 'facebook'
+  | 'gmail'
+  | 'x'
+  | 'medium'
+  | 'email'
+  | 'phone'
+  | 'instagram'
+  | 'linkedin'
+  | 'youtube'
+  | 'tiktok'
+  | 'telegram'
+  | 'whatsapp'
+  | 'snapchat'
+  | 'pinterest'
+  | 'viber'
+  | 'skype'
+  | 'reddit'
+  | 'discord'
+  | 'github'
+  | 'gitlab'
+  | 'bitbucket'
+  | 'dribbble'
+  | 'google'
+  | 'behance';
+/**
+ * Supported timezones in IANA format.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "supportedTimezones".
+ */
+export type SupportedTimezones =
+  | 'Pacific/Midway'
+  | 'Pacific/Niue'
+  | 'Pacific/Honolulu'
+  | 'Pacific/Rarotonga'
+  | 'America/Anchorage'
+  | 'Pacific/Gambier'
+  | 'America/Los_Angeles'
+  | 'America/Tijuana'
+  | 'America/Denver'
+  | 'America/Phoenix'
+  | 'America/Chicago'
+  | 'America/Guatemala'
+  | 'America/New_York'
+  | 'America/Bogota'
+  | 'America/Caracas'
+  | 'America/Santiago'
+  | 'America/Buenos_Aires'
+  | 'America/Sao_Paulo'
+  | 'Atlantic/South_Georgia'
+  | 'Atlantic/Azores'
+  | 'Atlantic/Cape_Verde'
+  | 'Europe/London'
+  | 'Europe/Berlin'
+  | 'Africa/Lagos'
+  | 'Europe/Athens'
+  | 'Africa/Cairo'
+  | 'Europe/Moscow'
+  | 'Asia/Riyadh'
+  | 'Asia/Dubai'
+  | 'Asia/Baku'
+  | 'Asia/Karachi'
+  | 'Asia/Tashkent'
+  | 'Asia/Calcutta'
+  | 'Asia/Dhaka'
+  | 'Asia/Almaty'
+  | 'Asia/Jakarta'
+  | 'Asia/Bangkok'
+  | 'Asia/Shanghai'
+  | 'Asia/Singapore'
+  | 'Asia/Tokyo'
+  | 'Asia/Seoul'
+  | 'Australia/Brisbane'
+  | 'Australia/Sydney'
+  | 'Pacific/Guam'
+  | 'Pacific/Noumea'
+  | 'Pacific/Auckland'
+  | 'Pacific/Fiji';
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "IDynamicIcon".
@@ -1936,60 +2009,6 @@ export type IDynamicIcon =
       | 'zoom-out'
     )
   | null;
-/**
- * Supported timezones in IANA format.
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "supportedTimezones".
- */
-export type SupportedTimezones =
-  | 'Pacific/Midway'
-  | 'Pacific/Niue'
-  | 'Pacific/Honolulu'
-  | 'Pacific/Rarotonga'
-  | 'America/Anchorage'
-  | 'Pacific/Gambier'
-  | 'America/Los_Angeles'
-  | 'America/Tijuana'
-  | 'America/Denver'
-  | 'America/Phoenix'
-  | 'America/Chicago'
-  | 'America/Guatemala'
-  | 'America/New_York'
-  | 'America/Bogota'
-  | 'America/Caracas'
-  | 'America/Santiago'
-  | 'America/Buenos_Aires'
-  | 'America/Sao_Paulo'
-  | 'Atlantic/South_Georgia'
-  | 'Atlantic/Azores'
-  | 'Atlantic/Cape_Verde'
-  | 'Europe/London'
-  | 'Europe/Berlin'
-  | 'Africa/Lagos'
-  | 'Europe/Athens'
-  | 'Africa/Cairo'
-  | 'Europe/Moscow'
-  | 'Asia/Riyadh'
-  | 'Asia/Dubai'
-  | 'Asia/Baku'
-  | 'Asia/Karachi'
-  | 'Asia/Tashkent'
-  | 'Asia/Calcutta'
-  | 'Asia/Dhaka'
-  | 'Asia/Almaty'
-  | 'Asia/Jakarta'
-  | 'Asia/Bangkok'
-  | 'Asia/Shanghai'
-  | 'Asia/Singapore'
-  | 'Asia/Tokyo'
-  | 'Asia/Seoul'
-  | 'Australia/Brisbane'
-  | 'Australia/Sydney'
-  | 'Pacific/Guam'
-  | 'Pacific/Noumea'
-  | 'Pacific/Auckland'
-  | 'Pacific/Fiji';
 
 export interface Config {
   auth: {
@@ -2001,6 +2020,7 @@ export interface Config {
     users: User;
     media: Media;
     blogs: Blog;
+    'contact-messages': ContactMessage;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -2011,6 +2031,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     blogs: BlogsSelect<false> | BlogsSelect<true>;
+    'contact-messages': ContactMessagesSelect<false> | ContactMessagesSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -2021,12 +2042,18 @@ export interface Config {
   globals: {
     'about-us': AboutUs;
     home: Home;
+    'privacy-policy': PrivacyPolicy;
+    'terms-of-service': TermsOfService;
+    'cookies-settings': CookiesSetting;
     footer: Footer;
     site: Site;
   };
   globalsSelect: {
     'about-us': AboutUsSelect<false> | AboutUsSelect<true>;
     home: HomeSelect<false> | HomeSelect<true>;
+    'privacy-policy': PrivacyPolicySelect<false> | PrivacyPolicySelect<true>;
+    'terms-of-service': TermsOfServiceSelect<false> | TermsOfServiceSelect<true>;
+    'cookies-settings': CookiesSettingsSelect<false> | CookiesSettingsSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     site: SiteSelect<false> | SiteSelect<true>;
   };
@@ -2064,14 +2091,21 @@ export interface UserAuthOperations {
 export interface Restaurant {
   id: number;
   image?: (number | null) | Media;
-  /**
-   * Maximum length: 80 characters
-   */
-  shortTitle: string;
-  /**
-   * Maximum length: 200 characters
-   */
-  shortDescription: string;
+  name: string;
+  description?: string | null;
+  location?: string | null;
+  phone?: string | null;
+  details?:
+    | {
+        title: string;
+        value?: string | null;
+        /**
+         * Optional — short text shown under title/value pair
+         */
+        desc?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   content?: {
     root: {
       type: string;
@@ -2213,18 +2247,6 @@ export interface Blog {
   image?: (number | null) | Media;
   title: string;
   desc: string;
-  location?: string | null;
-  details?:
-    | {
-        title: string;
-        value?: string | null;
-        /**
-         * Optional — short text shown under title/value pair
-         */
-        desc?: string | null;
-        id?: string | null;
-      }[]
-    | null;
   content?: {
     root: {
       type: string;
@@ -2241,6 +2263,20 @@ export interface Blog {
     [k: string]: unknown;
   } | null;
   meta?: ISeo;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-messages".
+ */
+export interface ContactMessage {
+  id: number;
+  name: string;
+  email: string;
+  message: string;
+  status?: ('new' | 'in-progress' | 'replied' | 'archived') | null;
+  confirm: boolean;
   updatedAt: string;
   createdAt: string;
 }
@@ -2266,6 +2302,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'blogs';
         value: number | Blog;
+      } | null)
+    | ({
+        relationTo: 'contact-messages';
+        value: number | ContactMessage;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -2315,8 +2355,18 @@ export interface PayloadMigration {
  */
 export interface RestaurantsSelect<T extends boolean = true> {
   image?: T;
-  shortTitle?: T;
-  shortDescription?: T;
+  name?: T;
+  description?: T;
+  location?: T;
+  phone?: T;
+  details?:
+    | T
+    | {
+        title?: T;
+        value?: T;
+        desc?: T;
+        id?: T;
+      };
   content?: T;
   meta?: T | ISeoSelect<T>;
   updatedAt?: T;
@@ -2453,17 +2503,21 @@ export interface BlogsSelect<T extends boolean = true> {
   image?: T;
   title?: T;
   desc?: T;
-  location?: T;
-  details?:
-    | T
-    | {
-        title?: T;
-        value?: T;
-        desc?: T;
-        id?: T;
-      };
   content?: T;
   meta?: T | ISeoSelect<T>;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-messages_select".
+ */
+export interface ContactMessagesSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  message?: T;
+  status?: T;
+  confirm?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -2509,19 +2563,30 @@ export interface AboutUs {
     title?: string | null;
     description?: string | null;
     image?: (number | null) | Media;
-    link: ICTALink;
+    ctaLink: CMSLink;
     enable?: boolean | null;
   };
   content?: {
-    blocks?: (IHeroSplit | IRichTextWithBlocks)[] | null;
-    enable?: boolean | null;
-  };
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   ctaSection: {
     label?: string | null;
     title?: string | null;
     description?: string | null;
     image?: (number | null) | Media;
-    link: ICTALink;
+    link: CMSLink;
     enable?: boolean | null;
   };
   meta?: ISeo;
@@ -2530,105 +2595,12 @@ export interface AboutUs {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ICTALink".
- */
-export interface ICTALink {
-  type?: ('reference' | 'custom') | null;
-  newTab?: boolean | null;
-  reference?: {
-    relationTo: 'blogs';
-    value: number | Blog;
-  } | null;
-  url?: string | null;
-  label: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "IHeroSplit".
- */
-export interface IHeroSplit {
-  bgVariant?: ('bg-background' | 'bg-secondary') | null;
-  /**
-   * Anchor-friendly block identifier for in-[page] navigation (e.g., /[page]#slug). The value is normalized to a URL-safe, lowercase slug; if left empty, a UUID will be generated automatically.
-   */
-  slug?: string | null;
-  mediaSide: 'left' | 'right';
-  aspect: 'auto' | 'ratio';
-  /**
-   * e.g., 1.777 for 16:9, 1.333 for 4:3
-   */
-  aspectRatio?: number | null;
-  media?: (number | null) | Media;
-  content?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  links?: ICMSLinks;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'heroSplit';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "CMSLink".
  */
 export interface CMSLink {
-  type?: ('reference' | 'custom') | null;
   newTab?: boolean | null;
-  /**
-   * Choose how the link should be rendered.
-   */
-  variant?: ('default' | 'outline' | 'ghost' | 'secondary' | 'link' | 'destructive') | null;
-  reference?: {
-    relationTo: 'blogs';
-    value: number | Blog;
-  } | null;
-  url?: string | null;
+  url: string;
   label?: string | null;
-  icon?: IDynamicIcon;
-  size?: ('default' | 'sm' | 'lg' | 'icon' | 'icon-sm' | 'icon-lg') | null;
-  iconRight?: boolean | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "IRichTextWithBlocks".
- */
-export interface IRichTextWithBlocks {
-  bgVariant?: ('bg-background' | 'bg-secondary') | null;
-  /**
-   * Anchor-friendly block identifier for in-[page] navigation (e.g., /[page]#slug). The value is normalized to a URL-safe, lowercase slug; if left empty, a UUID will be generated automatically.
-   */
-  slug?: string | null;
-  content?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  links?: ICMSLinks;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'richTextWithBlocks';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2636,28 +2608,28 @@ export interface IRichTextWithBlocks {
  */
 export interface Home {
   id: number;
-  blogsCarousel?: {
+  restaurantsCarousel?: {
     title?: string | null;
-    blogs?: (number | Blog)[] | null;
+    restaurants?: (number | Restaurant)[] | null;
     enable?: boolean | null;
   };
-  restaurants?: {
+  blogs?: {
     title?: string | null;
     description?: string | null;
     enable?: boolean | null;
   };
-  ctaSection?: {
+  ctaSection: {
     label?: string | null;
     title?: string | null;
     description?: string | null;
-    link?: ICTALink;
+    ctaLink: CMSLink;
     image?: (number | null) | Media;
     enable?: boolean | null;
   };
   topRestaurants?: {
     title?: string | null;
     description?: string | null;
-    blogs?: (number | Blog)[] | null;
+    list?: (number | Restaurant)[] | null;
     enable?: boolean | null;
   };
   contactUs?: {
@@ -2665,12 +2637,23 @@ export interface Home {
     title?: string | null;
     description?: string | null;
     enable?: boolean | null;
-    links?:
-      | {
-          link: ContactLinks;
-          id?: string | null;
-        }[]
-      | null;
+    contacts?: {
+      phone?: {
+        ctaText?: string | null;
+        number?: string | null;
+        placeholder?: string | null;
+      };
+      emailAddress?: {
+        ctaText?: string | null;
+        email?: string | null;
+        placeholder?: string | null;
+      };
+      location?: {
+        ctaText?: string | null;
+        url?: string | null;
+        placeholder?: string | null;
+      };
+    };
   };
   meta?: ISeo;
   updatedAt?: string | null;
@@ -2678,13 +2661,78 @@ export interface Home {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ContactLinks".
+ * via the `definition` "privacy-policy".
  */
-export interface ContactLinks {
-  url: string;
-  ctaText: string;
-  label: string;
-  icon?: IDynamicIcon;
+export interface PrivacyPolicy {
+  id: number;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  meta?: ISeo;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "terms-of-service".
+ */
+export interface TermsOfService {
+  id: number;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  meta?: ISeo;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cookies-settings".
+ */
+export interface CookiesSetting {
+  id: number;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  meta?: ISeo;
+  updatedAt?: string | null;
+  createdAt?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2692,54 +2740,16 @@ export interface ContactLinks {
  */
 export interface Footer {
   id: number;
-  footerBlocks?:
-    | (
-        | {
-            content?: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'richTextWithBlocksField';
-          }
-        | IFooterLinks
-        | IFooterIconLinks
-      )[]
+  copyrightText?: string | null;
+  socialMediaLinks?:
+    | {
+        socialMedia: SocialMedia;
+        url: string;
+        id?: string | null;
+      }[]
     | null;
   updatedAt?: string | null;
   createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "IFooterLinks".
- */
-export interface IFooterLinks {
-  links?: ICMSLinks;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'links';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "IFooterIconLinks".
- */
-export interface IFooterIconLinks {
-  links?: ICMSLinks;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'icon-links';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2787,20 +2797,10 @@ export interface AboutUsSelect<T extends boolean = true> {
         title?: T;
         description?: T;
         image?: T;
-        link?: T | ICTALinkSelect<T>;
+        ctaLink?: T | CMSLinkSelect<T>;
         enable?: T;
       };
-  content?:
-    | T
-    | {
-        blocks?:
-          | T
-          | {
-              heroSplit?: T | IHeroSplitSelect<T>;
-              richTextWithBlocks?: T | IRichTextWithBlocksSelect<T>;
-            };
-        enable?: T;
-      };
+  content?: T;
   ctaSection?:
     | T
     | {
@@ -2808,7 +2808,7 @@ export interface AboutUsSelect<T extends boolean = true> {
         title?: T;
         description?: T;
         image?: T;
-        link?: T | ICTALinkSelect<T>;
+        link?: T | CMSLinkSelect<T>;
         enable?: T;
       };
   meta?: T | ISeoSelect<T>;
@@ -2818,79 +2818,26 @@ export interface AboutUsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ICTALink_select".
- */
-export interface ICTALinkSelect<T extends boolean = true> {
-  type?: T;
-  newTab?: T;
-  reference?: T;
-  url?: T;
-  label?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "IHeroSplit_select".
- */
-export interface IHeroSplitSelect<T extends boolean = true> {
-  bgVariant?: T;
-  slug?: T;
-  mediaSide?: T;
-  aspect?: T;
-  aspectRatio?: T;
-  media?: T;
-  content?: T;
-  links?: T | ICMSLinksSelect<T>;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ICMSLinks_select".
- */
-export interface ICMSLinksSelect<T extends boolean = true> {
-  link?: T | CMSLinkSelect<T>;
-  id?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "CMSLink_select".
  */
 export interface CMSLinkSelect<T extends boolean = true> {
-  type?: T;
   newTab?: T;
-  variant?: T;
-  reference?: T;
   url?: T;
   label?: T;
-  icon?: T;
-  size?: T;
-  iconRight?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "IRichTextWithBlocks_select".
- */
-export interface IRichTextWithBlocksSelect<T extends boolean = true> {
-  bgVariant?: T;
-  slug?: T;
-  content?: T;
-  links?: T | ICMSLinksSelect<T>;
-  id?: T;
-  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "home_select".
  */
 export interface HomeSelect<T extends boolean = true> {
-  blogsCarousel?:
+  restaurantsCarousel?:
     | T
     | {
         title?: T;
-        blogs?: T;
+        restaurants?: T;
         enable?: T;
       };
-  restaurants?:
+  blogs?:
     | T
     | {
         title?: T;
@@ -2903,7 +2850,7 @@ export interface HomeSelect<T extends boolean = true> {
         label?: T;
         title?: T;
         description?: T;
-        link?: T | ICTALinkSelect<T>;
+        ctaLink?: T | CMSLinkSelect<T>;
         image?: T;
         enable?: T;
       };
@@ -2912,7 +2859,7 @@ export interface HomeSelect<T extends boolean = true> {
     | {
         title?: T;
         description?: T;
-        blogs?: T;
+        list?: T;
         enable?: T;
       };
   contactUs?:
@@ -2922,11 +2869,30 @@ export interface HomeSelect<T extends boolean = true> {
         title?: T;
         description?: T;
         enable?: T;
-        links?:
+        contacts?:
           | T
           | {
-              link?: T | ContactLinksSelect<T>;
-              id?: T;
+              phone?:
+                | T
+                | {
+                    ctaText?: T;
+                    number?: T;
+                    placeholder?: T;
+                  };
+              emailAddress?:
+                | T
+                | {
+                    ctaText?: T;
+                    email?: T;
+                    placeholder?: T;
+                  };
+              location?:
+                | T
+                | {
+                    ctaText?: T;
+                    url?: T;
+                    placeholder?: T;
+                  };
             };
       };
   meta?: T | ISeoSelect<T>;
@@ -2936,53 +2902,53 @@ export interface HomeSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ContactLinks_select".
+ * via the `definition` "privacy-policy_select".
  */
-export interface ContactLinksSelect<T extends boolean = true> {
-  url?: T;
-  ctaText?: T;
-  label?: T;
-  icon?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "footer_select".
- */
-export interface FooterSelect<T extends boolean = true> {
-  footerBlocks?:
-    | T
-    | {
-        richTextWithBlocksField?:
-          | T
-          | {
-              content?: T;
-              id?: T;
-              blockName?: T;
-            };
-        links?: T | IFooterLinksSelect<T>;
-        'icon-links'?: T | IFooterIconLinksSelect<T>;
-      };
+export interface PrivacyPolicySelect<T extends boolean = true> {
+  content?: T;
+  meta?: T | ISeoSelect<T>;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "IFooterLinks_select".
+ * via the `definition` "terms-of-service_select".
  */
-export interface IFooterLinksSelect<T extends boolean = true> {
-  links?: T | ICMSLinksSelect<T>;
-  id?: T;
-  blockName?: T;
+export interface TermsOfServiceSelect<T extends boolean = true> {
+  content?: T;
+  meta?: T | ISeoSelect<T>;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "IFooterIconLinks_select".
+ * via the `definition` "cookies-settings_select".
  */
-export interface IFooterIconLinksSelect<T extends boolean = true> {
-  links?: T | ICMSLinksSelect<T>;
-  id?: T;
-  blockName?: T;
+export interface CookiesSettingsSelect<T extends boolean = true> {
+  content?: T;
+  meta?: T | ISeoSelect<T>;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
+  copyrightText?: T;
+  socialMediaLinks?:
+    | T
+    | {
+        socialMedia?: T;
+        url?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3004,46 +2970,46 @@ export interface SiteSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "IRichTextMediaBlock".
+ * via the `definition` "IListItemsBlock".
  */
-export interface IRichTextMediaBlock {
-  aspect: 'auto' | 'ratio';
-  /**
-   * e.g., 1.777 for 16:9, 1.333 for 4:3
-   */
-  aspectRatio?: number | null;
-  /**
-   * Enable to set a maximum width for this block. (px)
-   */
-  constrainWidth?: boolean | null;
-  maxWidth?: number | null;
-  media?: (number | null) | Media;
-  /**
-   * Applied when width is limited.
-   */
-  align?: ('left' | 'center' | 'right') | null;
+export interface IListItemsBlock {
+  listItems?:
+    | {
+        icon?: IDynamicIcon;
+        title?: string | null;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'media-block';
+  blockType: 'list-items';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "IRichTextInlineMediaBlock".
+ * via the `definition` "IRichTextMediaBlock".
  */
-export interface IRichTextInlineMediaBlock {
-  /**
-   * Enable to set a maximum width for this block. (px)
-   */
-  constrainWidth?: boolean | null;
-  maxWidth?: number | null;
+export interface IRichTextMediaBlock {
   media?: (number | null) | Media;
-  /**
-   * Applied when width is limited.
-   */
-  align?: ('left' | 'center' | 'right') | null;
+  align?: ('left' | 'right') | null;
+  caption?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'inline-media-block';
+  blockType: 'media-block';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

@@ -99,19 +99,11 @@
 @theme {
   --container-8xl: 88rem;
   --container-9xl: 88rem;
+  --container-layout:72rem;
 }
 
 @layer components {
-  .animate-from-l {
-    @apply opacity-0 -translate-x-10 scale-95 translate-y-2 delay-150 ease-in-out transition-all duration-400 group-data-[inview=true]:opacity-100 group-data-[inview=true]:scale-100 group-data-[inview=true]:translate-x-0 group-data-[inview=true]:translate-y-0
-  }
-  .layout {
-    @apply max-w-7xl;
-  }
-}
-
-@layer components {
-  .animate-from-r {
-    @apply opacity-0  translate-x-8 scale-95 translate-y-4 delay-150 ease-in-out transition-all duration-400 group-data-[inview=true]:opacity-100 group-data-[inview=true]:scale-100 group-data-[inview=true]:translate-x-0 group-data-[inview=true]:translate-y-0
+  .max-w-layout {
+    @apply max-w-6xl;
   }
 }
