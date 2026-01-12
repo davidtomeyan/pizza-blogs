@@ -21,6 +21,7 @@
     "@biomejs/biome": "^2.3.7",
     "@hookform/resolvers": "^5.2.1",
     "@next/third-parties": "^15.4.6",
+    "@payloadcms/db-postgres": "3.49.1",
     "@payloadcms/db-sqlite": "3.49.1",
     "@payloadcms/next": "3.49.1",
     "@payloadcms/payload-cloud": "3.49.1",
