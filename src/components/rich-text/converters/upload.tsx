@@ -55,7 +55,7 @@ export const uploadJSXConverter: JSXConverters<SerializedUploadNode> = {
         <InViewVideoElement
           loop
           className={cn(className)}
-          src={`/${uploadDoc.filename}`}
+          src={`/${uploadDoc.url}`}
           style={style}
         />)
     }
@@ -66,7 +66,7 @@ export const uploadJSXConverter: JSXConverters<SerializedUploadNode> = {
     if (!isImage && url) {
       return (
         <Link href={url} rel="noopener noreferrer" target="_blank">
-          {uploadDoc.filename}
+          {uploadDoc.url}
         </Link>
       )
     }
@@ -86,7 +86,7 @@ export const uploadJSXConverter: JSXConverters<SerializedUploadNode> = {
              style={style}
              className={cn(className,"align-top")}
              blurDataURL={placeholderBlur}
-             src={`/${uploadDoc.filename}`}
+             src={`/${uploadDoc.url}`}
              quality={100}
              sizes={sizes}
              alt={'alt' in uploadDoc ? (uploadDoc.alt as string ?? '') : ''}

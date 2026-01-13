@@ -25,10 +25,10 @@ export async function generateMetadata(): Promise<Metadata> {
   if (
     result.favicon
     && typeof result.favicon === 'object'
-    && result.favicon.filename
+    && result.favicon.url
   ) {
     icons.icon = {
-      url: `/${result.favicon?.filename}`,
+      url: `/${result.favicon?.url}`,
     };
   }
   const home = await getCachedGlobal({
@@ -37,8 +37,8 @@ export async function generateMetadata(): Promise<Metadata> {
 
   const ImageUrl =
     typeof home?.meta?.image === 'object'
-    && home?.meta?.image?.sizes?.og?.filename
-      ? `/${home?.meta?.image?.sizes?.og?.filename}`
+    && home?.meta?.image?.sizes?.og?.url
+      ? `/${home?.meta?.image?.sizes?.og?.url}`
       : '';
 
   return {

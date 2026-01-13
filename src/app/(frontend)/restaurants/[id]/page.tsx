@@ -66,10 +66,10 @@ export async function generateMetadata({
 
   const ImageUrl =
     isObject(restaurant?.meta?.image)
-    && restaurant?.meta?.image?.sizes?.og?.filename
-      ? `/${restaurant?.meta?.image?.sizes?.og?.filename}`
+    && restaurant?.meta?.image?.sizes?.og?.url
+      ? `/${restaurant?.meta?.image?.sizes?.og?.url}`
       : isObject(restaurant?.image)
-        ? `/${restaurant?.image.sizes?.og?.filename}`
+        ? `/${restaurant?.image.sizes?.og?.url}`
         : '';
 
   return {
