@@ -80,7 +80,7 @@ function RestaurantsCarousel({ data }: { data?: Home['restaurantsCarousel'] }) {
                               <ItemContent>
                                 <ItemTitle>
                                   {detail.title}{' '}
-                                  <span className='empty:hidden text-muted-foreground'>
+                                  <span className='empty:hidden font-semibold text-muted-foreground'>
                                     {detail.value}
                                   </span>
                                 </ItemTitle>
