@@ -40,7 +40,7 @@ export const Media: CollectionConfig = {
     ...(isVercel
       ? {}
       : {
-          staticDir: path.resolve(dirname, '../../public/media'),
+          staticDir: path.resolve(dirname, '../../public'),
         }),
     adminThumbnail: 'thumbnail',
     focalPoint: true,

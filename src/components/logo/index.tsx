@@ -14,7 +14,7 @@ async function Logo({ className }: { className?: string }) {
       className={cn('h-full w-fit  object-contain max-w-32', className)}
       width={logo.width ?? 100}
       height={logo.height ?? 100}
-      src={`/media/${logo.filename}`}
+      src={`/${logo.filename}`}
       alt={logo.alt}
     />
   );

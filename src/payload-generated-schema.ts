@@ -632,7 +632,7 @@ export const home = pgTable(
     ctaSection_title: varchar("cta_section_title"),
     ctaSection_description: varchar("cta_section_description"),
     ctaSection_ctaLink_newTab: boolean("cta_section_cta_link_new_tab"),
-    ctaSection_ctaLink_url: varchar("cta_section_cta_link_url").notNull(),
+    ctaSection_ctaLink_url: varchar("cta_section_cta_link_url"),
     ctaSection_ctaLink_label: varchar("cta_section_cta_link_label"),
     ctaSection_image: integer("cta_section_image_id").references(
       () => media.id,

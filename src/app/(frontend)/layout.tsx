@@ -28,7 +28,7 @@ export async function generateMetadata(): Promise<Metadata> {
     && result.favicon.filename
   ) {
     icons.icon = {
-      url: `/media/${result.favicon?.filename}`,
+      url: `/${result.favicon?.filename}`,
     };
   }
   const home = await getCachedGlobal({
@@ -38,7 +38,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const ImageUrl =
     typeof home?.meta?.image === 'object'
     && home?.meta?.image?.sizes?.og?.filename
-      ? `/media/${home?.meta?.image?.sizes?.og?.filename}`
+      ? `/${home?.meta?.image?.sizes?.og?.filename}`
       : '';
 
   return {

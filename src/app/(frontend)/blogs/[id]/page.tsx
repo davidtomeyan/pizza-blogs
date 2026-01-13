@@ -59,9 +59,9 @@ export async function generateMetadata({
 
   const ImageUrl =
     isObject(blog?.meta?.image) && blog?.meta?.image?.sizes?.og?.filename
-      ? `/media/${blog?.meta?.image?.sizes?.og?.filename}`
+      ? `/${blog?.meta?.image?.sizes?.og?.filename}`
       : isObject(blog?.image)
-        ? `/media/${blog?.image.sizes?.og?.filename}`
+        ? `/${blog?.image.sizes?.og?.filename}`
         : '';
 
   return {

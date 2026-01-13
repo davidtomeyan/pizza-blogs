@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
     const ImageUrl =
         typeof page?.meta?.image === 'object'
         && page?.meta?.image?.sizes?.og?.filename
-            ? `/media/${page?.meta?.image?.sizes?.og?.filename}`
+            ? `/${page?.meta?.image?.sizes?.og?.filename}`
             : '';
 
     return {
