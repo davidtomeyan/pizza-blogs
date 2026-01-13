@@ -24,7 +24,7 @@ export async function Footer() {
             className={cn([
               'flex gap-x-4 gap-y-4 flex-1 px-2 lg:flex-row lg:justify-start',
             ])}>
-            <Logo className="mx-auto"/>
+            <Logo className="mx-auto w-full"/>
           </div>
           <div
             className={cn([
