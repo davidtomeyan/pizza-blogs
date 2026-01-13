@@ -55,7 +55,7 @@ export const uploadJSXConverter: JSXConverters<SerializedUploadNode> = {
         <InViewVideoElement
           loop
           className={cn(className)}
-          src={`/${uploadDoc.url}`}
+          src={`${uploadDoc.url}`}
           style={style}
         />)
     }
@@ -86,7 +86,7 @@ export const uploadJSXConverter: JSXConverters<SerializedUploadNode> = {
              style={style}
              className={cn(className,"align-top")}
              blurDataURL={placeholderBlur}
-             src={`/${uploadDoc.url}`}
+             src={`${uploadDoc.url}`}
              quality={100}
              sizes={sizes}
              alt={'alt' in uploadDoc ? (uploadDoc.alt as string ?? '') : ''}
