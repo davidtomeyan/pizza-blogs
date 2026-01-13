@@ -1,18 +1,10 @@
-"use client"
 import Link from 'next/link';
-import {
-  PopoverAnchor,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
+import { PopoverAnchor, PopoverTrigger } from '@/components/ui/popover';
 import { Menu, X } from 'lucide-react';
 import { Logo } from '@/components/logo';
-import {PopoverProvider, usePopover} from './popover-provider';
+import { PopoverProvider } from './popover-provider';
 import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
-import { HideScrollBody } from '@/components/navbar/client';
-
+import { LinksMobile } from '@/components/navbar/client';
 export function Navbar() {
   return (
     <PopoverProvider>
@@ -56,51 +48,5 @@ function LinksDesktop() {
         <Link href={'/#contact-us'}>contact-us</Link>
       </Button>
     </nav>
-  );
-}
-
-function LinksMobile() {
-    const {setOpen} = usePopover()
-    const handleClose = () => {
-        setOpen(false);
-    }
-  return (
-    <PopoverContent
-      className={cn([
-        'h-[calc(var(--radix-popover-content-available-height))]',
-        'w-[calc(var(--radix-popover-content-available-width))]',
-        'origin-(--radix-popover-content-transform-origin)',
-        'z-50 flex min-h-0 flex-col outline-hidden bg-background no-scrollbar overflow-y-auto rounded-none border-none p-0 shadow-none duration-100',
-      ])}
-      sideOffset={0}
-      alignOffset={0}
-      side={'top'}
-      align={'center'}>
-      <div className='flex min-h-full max-h-full h-full w-full flex-col '>
-        <div className='min-h-0 flex w-full flex-1 overflow-hidden'>
-          <ScrollArea className='flex-1'>
-            <nav className='flex flex-col gap-4 w-full max-w-lg mx-auto py-8 px-6'>
-              <Button
-                variant='link'
-                asChild>
-                <Link onNavigate={handleClose} href={'/'}>Home</Link>
-              </Button>
-              <Button
-                variant='link'
-                asChild>
-                <Link onNavigate={handleClose} href={'/about-us'}>About Us</Link>
-              </Button>
-              <Button
-                className='mt-4'
-                asChild>
-                <Link onNavigate={handleClose} href={'/#contact-us'}>contact-us</Link>
-              </Button>
-            </nav>
-            <HideScrollBody />
-            <ScrollBar />
-          </ScrollArea>
-        </div>
-      </div>
-    </PopoverContent>
   );
 }
