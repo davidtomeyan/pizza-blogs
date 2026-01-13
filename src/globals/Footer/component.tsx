@@ -24,7 +24,7 @@ export async function Footer() {
             className={cn([
               'flex flex-col items-center gap-x-4 gap-y-4 justify-center flex-1 px-2 lg:flex-row lg:justify-start',
             ])}>
-            <Logo />
+            <Logo className="w-full"/>
           </div>
           <div
             className={cn([

@@ -11,7 +11,7 @@ async function Logo({ className }: { className?: string }) {
   return (
     <Image
       sizes='auto'
-      className={cn('h-full w-fit  object-contain max-w-32', className)}
+      className={cn('h-full w-fit object-contain max-w-32', className)}
       width={logo.width ?? 100}
       height={logo.height ?? 100}
       src={`${logo.url}`}

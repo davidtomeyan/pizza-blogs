@@ -1,3 +1,4 @@
+"use client"
 import Link from 'next/link';
 import {
   PopoverAnchor,
@@ -6,7 +7,7 @@ import {
 } from '@/components/ui/popover';
 import { Menu, X } from 'lucide-react';
 import { Logo } from '@/components/logo';
-import { PopoverProvider } from './popover-provider';
+import {PopoverProvider, usePopover} from './popover-provider';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
@@ -59,6 +60,10 @@ function LinksDesktop() {
 }
 
 function LinksMobile() {
+    const {setOpen} = usePopover()
+    const handleClose = () => {
+        setOpen(false);
+    }
   return (
     <PopoverContent
       className={cn([
@@ -78,17 +83,17 @@ function LinksMobile() {
               <Button
                 variant='link'
                 asChild>
-                <Link href={'/'}>Home</Link>
+                <Link onNavigate={handleClose} href={'/'}>Home</Link>
               </Button>
               <Button
                 variant='link'
                 asChild>
-                <Link href={'/about-us'}>About Us</Link>
+                <Link onNavigate={handleClose} href={'/about-us'}>About Us</Link>
               </Button>
               <Button
                 className='mt-4'
                 asChild>
-                <Link href={'/#contact-us'}>contact-us</Link>
+                <Link onNavigate={handleClose} href={'/#contact-us'}>contact-us</Link>
               </Button>
             </nav>
             <HideScrollBody />
