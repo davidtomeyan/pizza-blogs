@@ -80,7 +80,7 @@ export const blocksJSXConverter: JSXConverters<SerializedBlockNode> = {
               media={fields.media}
             />
           </div>
-          <div className='pt-8 md:py-14'>
+          <div className='pt-8 md:py-20'>
             {fields.caption && (
               <RichText
                 className='prose-sm max-w-5xl m-0! p-0! [&_p]:text-muted-foreground'
