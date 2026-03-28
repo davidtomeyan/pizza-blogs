@@ -6,11 +6,11 @@ import { generateSitemaps as generateRestaurantSitemaps } from '@/app/(sitemap)/
 export default async function robots(): Promise<MetadataRoute.Robots> {
   const blogsIds = await generateBlogSitemaps();
   const RestaurantIds = await generateRestaurantSitemaps();
+  const restaurantSitemaps = RestaurantIds.map(
+      ({id}) => `${getServerSideURL()}/restaurants/sitemap/${id}.xml`,
+  );
   const blogSitemaps = blogsIds.map(
     ({id}) => `${getServerSideURL()}/blogs/sitemap/${id}.xml`,
-  );
-  const restaurantSitemaps = RestaurantIds.map(
-    ({id}) => `${getServerSideURL()}/restaurants/sitemap/${id}.xml`,
   );
 
   return {
