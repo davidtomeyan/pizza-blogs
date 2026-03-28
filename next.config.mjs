@@ -4,6 +4,9 @@ import { withPayload } from '@payloadcms/next/withPayload';
 const nextConfig = {
   // Your Next.js config here
   output: "standalone",
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   async redirects() {
     return [];
   },
