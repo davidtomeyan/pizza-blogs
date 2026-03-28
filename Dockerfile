@@ -18,6 +18,8 @@ RUN \
   else echo "Lockfile not found." && exit 1; \
   fi
 
+# Install platform-specific native binaries for Alpine (musl)
+RUN npm install --include=optional sharp @tailwindcss/oxide-linux-x64-musl lightningcss-linux-x64-musl
 
 # Rebuild the source code only when needed
 FROM base AS builder
