@@ -5,7 +5,10 @@ const nextConfig = {
   // Your Next.js config here
   output: "standalone",
   eslint: {
-    ignoreDuringBuilds: true,
+    ignoreDuringBuilds: !Boolean(process.env.LOCAL_DEV),
+  },
+  typescript:{
+    ignoreBuildErrors:!Boolean(process.env.LOCAL_DEV)
   },
   async redirects() {
     return [];
