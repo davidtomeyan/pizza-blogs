@@ -1,6 +1,7 @@
 import type { Plugin } from 'payload';
 import { seoPlugin } from '@payloadcms/plugin-seo';
-import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob';
+import { s3Storage } from '@payloadcms/storage-s3'
+
 export const plugins: Plugin[] = [
   seoPlugin({
     collections: [
@@ -19,11 +20,21 @@ export const plugins: Plugin[] = [
     tabbedUI: true,
     uploadsCollection: 'media',
   }),
-  vercelBlobStorage({
-    enabled: true,
+
+  s3Storage({
     collections: {
       media: true,
     },
-    token: process.env.BLOB_READ_WRITE_TOKEN,
+    bucket: process.env.S3_BUCKET!,
+    config: {
+      endpoint: process.env.S3_ENDPOINT,
+      credentials: {
+        accessKeyId: process.env.S3_ACCESS_KEY_ID!,
+        secretAccessKey: process.env.S3_SECRET_ACCESS_KEY!,
+      },
+      region: process.env.S3_REGION || 'auto',
+      forcePathStyle: true,
+    },
   }),
+
 ];
