@@ -2274,7 +2274,7 @@ export interface ContactMessage {
   id: number;
   name: string;
   email: string;
-  message: string;
+  message?: string | null;
   status?: ('new' | 'in-progress' | 'replied' | 'archived') | null;
   confirm: boolean;
   updatedAt: string;

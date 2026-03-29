@@ -39,7 +39,7 @@ export const ContactMessages: CollectionConfig = {
     {
       name: 'message',
       type: 'textarea',
-      required: true,
+      required: false,
       admin: {
         readOnly: true,
       },

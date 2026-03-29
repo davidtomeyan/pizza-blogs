@@ -71,7 +71,7 @@ export async function contactUsAction(
     data: {
       name: output.data.name,
       email: output.data.email,
-      message: output.data.message,
+      message: output.data.message ?? '',
       confirm: true,
     },
   });
