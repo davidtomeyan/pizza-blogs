@@ -19,10 +19,9 @@ if (process.env.SMTP_USER && process.env.SMTP_PASS && process.env.SMTP_HOST) {
   };
 } else if (process.env.MAIL_GOOGLE_MAIL && process.env.MAIL_GOOGLE_PASSWORD) {
   const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    // secure: process.env.NODE_ENV === 'production',
-    secure: false,
+    host: 'smtp.gmail.com',
     port: 587,
+    secure: false,
     auth: {
       user: process.env.MAIL_GOOGLE_MAIL,
       pass: process.env.MAIL_GOOGLE_PASSWORD,
