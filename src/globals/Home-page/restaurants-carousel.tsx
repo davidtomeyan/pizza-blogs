@@ -84,7 +84,7 @@ function RestaurantsCarousel({ data }: { data?: Home['restaurantsCarousel'] }) {
                                     {detail.value}
                                   </span>
                                 </ItemTitle>
-                                <ItemDescription>{detail.desc}</ItemDescription>
+                                <ItemDescription className="leading-none">{detail.desc}</ItemDescription>
                               </ItemContent>
                             </Item>
                           ))}

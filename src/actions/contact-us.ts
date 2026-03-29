@@ -24,7 +24,10 @@ export async function contactUsAction(
   formData: FormData,
 ): Promise<State> {
   const input = Object.fromEntries(formData.entries());
-  const output = schema.safeParse(input);
+  const output = schema.safeParse({
+    ...input,
+    confirm: 'on',
+  });
 
   if (!output.success) {
     const error: State['error'] = {};

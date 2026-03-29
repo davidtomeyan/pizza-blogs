@@ -93,24 +93,24 @@ export function ContactUsForm({
             />
             <FieldError>{state?.error?.message}</FieldError>
           </Field>
-          <Field
-            data-invalid={!!state?.error?.confirm}
-            orientation='horizontal'>
-            <Checkbox
-              name='confirm'
-              id='confirm'
-              defaultChecked={state?.values?.confirm === 'on'}
-            />
-            <FieldContent>
-              <FieldLabel htmlFor='confirm'>
-                <FieldDescription>
-                  By selecting this you agree to our{' '}
-                  <Link href={'/privacy-policy'}>Privacy Policy</Link>
-                </FieldDescription>
-              </FieldLabel>
-              <FieldError>{state?.error?.confirm}</FieldError>
-            </FieldContent>
-          </Field>
+          {/*<Field*/}
+          {/*  data-invalid={!!state?.error?.confirm}*/}
+          {/*  orientation='horizontal'>*/}
+          {/*  <Checkbox*/}
+          {/*    name='confirm'*/}
+          {/*    id='confirm'*/}
+          {/*    defaultChecked={state?.values?.confirm === 'on'}*/}
+          {/*  />*/}
+          {/*  <FieldContent>*/}
+          {/*    <FieldLabel htmlFor='confirm'>*/}
+          {/*      <FieldDescription>*/}
+          {/*        By selecting this you agree to our{' '}*/}
+          {/*        <Link href={'/privacy-policy'}>Privacy Policy</Link>*/}
+          {/*      </FieldDescription>*/}
+          {/*    </FieldLabel>*/}
+          {/*    <FieldError>{state?.error?.confirm}</FieldError>*/}
+          {/*  </FieldContent>*/}
+          {/*</Field>*/}
           <Field>
             <Button type="submit" disabled={!isClient || isPending}>
               {(!isClient || isPending) && <Spinner />} Send message
