@@ -20,31 +20,6 @@ export const Site: GlobalConfig = {
     },
     fields: [
         {
-            type: 'upload',
-            relationTo: 'media',
-            name: 'logo',
-            label: 'logo',
-            filterOptions: {
-                mimeType: {
-                    contains: 'image',
-                },
-            },
-        },
-        {
-            type: 'upload',
-            relationTo: 'media',
-            name: 'favicon',
-            label: 'Favicon',
-            filterOptions: {
-                mimeType: {
-                    contains: 'image',
-                },
-            },
-            admin: {
-                description: 'Favicon Generator - https://realfavicongenerator.net',
-            },
-        },
-        {
             type: 'text',
             name: 'googleVerificationCode',
         },

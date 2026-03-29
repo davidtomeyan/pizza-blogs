@@ -12,7 +12,7 @@ export function Navbar() {
         <div className='grow flex items-center justify-between max-w-layout gap-5 px-4 lg:px-6 py-4 min-w-0'>
           <Link
             href='/'
-            className='h-full flex'>
+            className='h-12 md:h-14 flex'>
             <Logo />
           </Link>
           <LinksDesktop />

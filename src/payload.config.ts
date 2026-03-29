@@ -27,6 +27,26 @@ const dirname = path.dirname(filename);
 
 export default buildConfig({
   admin: {
+    meta: {
+      icons: {
+        icon: [
+          {
+            url: '/favicon.ico',
+            sizes: '48x48',
+          },
+          {
+            url: '/favicon.svg',
+            type: 'image/svg+xml',
+          },
+          {
+            url: '/favicon-96x96.png',
+            type: 'image/png',
+            sizes: '96x96',
+          },
+        ],
+        apple: '/apple-touch-icon.png',
+      },
+    },
     user: Users.slug,
     importMap: {
       baseDir: path.resolve(dirname),

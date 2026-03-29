@@ -22,15 +22,12 @@ export async function generateMetadata(): Promise<Metadata> {
   if (result.googleVerificationCode) {
     verification.google = result.googleVerificationCode;
   }
-  if (
-    result.favicon
-    && typeof result.favicon === 'object'
-    && result.favicon.url
-  ) {
-    icons.icon = {
-      url: `${result.favicon?.url}`,
-    };
-  }
+  icons.icon = [
+    { url: '/favicon.ico', sizes: '48x48' },
+    { url: '/favicon.svg', type: 'image/svg+xml' },
+    { url: '/favicon-96x96.png', type: 'image/png', sizes: '96x96' },
+  ];
+  icons.apple = '/apple-touch-icon.png';
   const home = await getCachedGlobal({
     slug: 'home',
   })();
@@ -45,6 +42,10 @@ export async function generateMetadata(): Promise<Metadata> {
     metadataBase: new URL(getServerSideURL()),
     title: home?.meta?.title ?? '',
     description: home?.meta?.description ?? '',
+    appleWebApp: {
+      title: 'pizza-MT',
+    },
+    manifest: '/manifest.json',
     openGraph: {
       images: [
         ImageUrl,

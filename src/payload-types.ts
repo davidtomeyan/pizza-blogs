@@ -2757,11 +2757,6 @@ export interface Footer {
  */
 export interface Site {
   id: number;
-  logo?: (number | null) | Media;
-  /**
-   * Favicon Generator - https://realfavicongenerator.net
-   */
-  favicon?: (number | null) | Media;
   googleVerificationCode?: string | null;
   googleTagManagerId?: string | null;
   googleAnalyticsId?: string | null;
@@ -2955,8 +2950,6 @@ export interface FooterSelect<T extends boolean = true> {
  * via the `definition` "site_select".
  */
 export interface SiteSelect<T extends boolean = true> {
-  logo?: T;
-  favicon?: T;
   googleVerificationCode?: T;
   googleTagManagerId?: T;
   googleAnalyticsId?: T;
